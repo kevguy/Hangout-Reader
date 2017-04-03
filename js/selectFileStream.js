@@ -69,10 +69,10 @@ let createSelectImageStream = function createSelectImageStream(elementId, vueIns
 								.flatMap(function(response){
 									if (response.ok){
 										console.log(response);
-										if (!GLOBAL_OBJ.imageByGaiaIdMap.get(participant.name_id) && response.image){
-											console.log('lets do this');
-											GLOBAL_OBJ.imageByGaiaIdMap.set(participant.name_id, response.image.url);
-										}
+										// if (!GLOBAL_OBJ.imageByGaiaIdMap.get(participant.name_id) && response.image){
+										console.log('lets do this');
+										GLOBAL_OBJ.imageByGaiaIdMap.set(participant.name_id, response.image.url);
+										// }
 									}
 									console.log(GLOBAL_OBJ.imageByGaiaIdMap);
 									return Rx.Observable.of(response);
