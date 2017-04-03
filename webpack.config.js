@@ -11,6 +11,7 @@ const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 module.exports = {
 	// context: path.resolve('js'),
 	entry: {
+		main: "./js/main",
 		about: './js/app',
 		// fileupload: './js/fileupload'
 	},
@@ -27,11 +28,11 @@ module.exports = {
 		// 	// include: /\.min\.js$/
 		// }),
 		new ExtractTextPlugin("[name].css"),
-		new OptimizeCssAssetsPlugin({
-		    //assetNameRegExp: /\.min\.css$/,
-		    // default is /\.css$/g
-		    cssProcessorOptions: { discardComments: { removeAll: true } }
-		})
+		// new OptimizeCssAssetsPlugin({
+		//     //assetNameRegExp: /\.min\.css$/,
+		//     // default is /\.css$/g
+		//     cssProcessorOptions: { discardComments: { removeAll: true } }
+		// })
 	],
 	devServer: {
 		contentBase: 'public'
