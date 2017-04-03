@@ -83,6 +83,8 @@ function createVueStuff(){
 		methods: {
 			getImageUrl(senderId){
 				let url = GLOBAL_OBJ.imageByGaiaIdMap.get(senderId);
+				console.log(senderId);
+				console.log(GLOBAL_OBJ.imageByGaiaIdMap);
 				if (url){
 					console.log(url);
 					return url;
