@@ -306,33 +306,40 @@
 		<div v-if="!enable_table_mode">
 			<ul class="demo-list-three mdl-list">
 				<li class="mdl-list__item mdl-list__item--three-line mdl-shadow--2dp fuck" v-for="text in $root.$data.history">
-				    <span class="mdl-list__item-primary-content">
-				      <i class="material-icons  mdl-list__item-avatar">person</i>
-				      <span>{{text.sender_name}}</span>
-				      <template v-if="text.content.message">
-				      	<span class="mdl-list__item-text-body" v-html="text.content.message"></span>
-				      </template>
-				      <template v-if="text.content.photo.url">
-					      <div class="demo-card-image mdl-card mdl-shadow--2dp" v-bind:style="{ background: 'url(' + text.content.photo.url + ') center / cover' }">
-							  <div class="mdl-card__title mdl-card--expand"></div>
-							  <div class="mdl-card__actions">
-							    <span class="demo-card-image__filename" >     </span>
-						  		</div>
-					  </template>
-					  <span class="mdl-list__item-text-body" style="float: right;font-style: italic;margin-top:8px;font-size:12px;">
-									{{text.msgtime}}
-						</span>
-				    </span>
-				  </li>
+					<span class="mdl-list__item-primary-content">
+						<template v-if="$root.$data.enable_show_person">
+							<i class="material-icons  mdl-list__item-avatar">person</i>
+							<span>{{text.sender_name}}</span>		
+						</template>		      
+						<template v-if="$root.$data.enable_show_msg">
+							<template v-if="text.content.message">
+								<span class="mdl-list__item-text-body" v-html="text.content.message"></span>
+							</template>
+							<template v-if="text.content.photo.url">
+								<div class="demo-card-image mdl-card mdl-shadow--2dp" v-bind:style="{ background: 'url(' + text.content.photo.url + ') center / cover' }">
+									<div class="mdl-card__title mdl-card--expand"></div>
+									<div class="mdl-card__actions">
+										<span class="demo-card-image__filename" >     </span>
+									</div>
+								</div>
+							</template>	
+						</template>
+						<template v-if="$root.$data.enable_show_time">
+							<span class="mdl-list__item-text-body" style="float: right;font-style: italic;margin-top:8px;font-size:12px;">
+										{{text.msgtime}}
+							</span>
+						</template>
+					</span>
+				</li>
 			</ul>
 		</div>
 		<div v-else-if="enable_table_mode">
 			<table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp" style="white-space: initial;width:100%">
 				<thead>
 					<tr>
-						<th>Time</th>
-						<th>Person</th>
-						<th>Message</th>
+						<template v-if="$root.$data.enable_show_time"><th>Time</th></template>
+						<template v-if="$root.$data.enable_show_person"><th>Person</th></template>
+						<template v-if="$root.$data.enable_show_msg"><th>Message</th></template>					
 					</tr>
 				</thead>
 				<tbody>
@@ -358,23 +365,23 @@
 						
 						<template v-if="text.content.message">
 							<tr>
-							<td>{{text.msgtime}}</td>
-							<td>{{text.sender_name}}</td>
-				      		<td v-bind:style="{maxWidth: '300px'}" v-html="text.content.message"></td>
+								<template v-if="$root.$data.enable_show_time"><td>{{text.msgtime}}</td></template>
+								<template v-if="$root.$data.enable_show_person"><td>{{text.sender_name}}</td></template>
+					      		<template v-if="$root.$data.enable_show_msg"><td v-bind:style="{maxWidth: '300px'}" v-html="text.content.message"></td></template>
 				      		</tr>
 				      	</template>
+
 				      	<template v-if="text.content.photo.url !== ''">
-				      	<tr>
-				      		<td>{{text.msgtime}}</td>
-							<td>{{text.sender_name}}</td>
-				      		<td style="max-width=300px;"><img v-bind:src="text.content.photo.url" style="max-width:300px;max-height:300px"></td>
+				      		<tr>
+				      			<template v-if="$root.$data.enable_show_time"><td>{{text.msgtime}}</td></template>
+								<template v-if="$root.$data.enable_show_person"><td>{{text.sender_name}}</td></template>
+				      			<template v-if="$root.$data.enable_show_msg"><td style="max-width=300px;"><img v-bind:src="text.content.photo.url" style="max-width:300px;max-height:300px"></td></template>
 				      		</tr>
 						</template>
 					</template>	
 				</tbody>
 			</table>
 		</div>
-		
 	</template>
 
 
@@ -433,7 +440,7 @@
 					    </span>
 					    <span class="mdl-list__item-secondary-action">
 					      <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="show-person-switch">
-					        <input type="checkbox" id="show-person-switch" class="mdl-switch__input" />
+					        <input type="checkbox" id="show-person-switch" class="mdl-switch__input" v-model="$root.$data.enable_show_person"/>
 					      </label>
 					    </span>
 					  </li>
@@ -444,7 +451,7 @@
 					    </span>
 					    <span class="mdl-list__item-secondary-action">
 					      <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="show-time-switch">
-					        <input type="checkbox" id="show-time-switch" class="mdl-switch__input" />
+					        <input type="checkbox" id="show-time-switch" class="mdl-switch__input" v-model="$root.$data.enable_show_time"/>
 					      </label>
 					    </span>
 					  </li>
@@ -455,7 +462,7 @@
 					    </span>
 					    <span class="mdl-list__item-secondary-action">
 					      <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="show-msg-switch">
-					        <input type="checkbox" id="show-msg-switch" class="mdl-switch__input" />
+					        <input type="checkbox" id="show-msg-switch" class="mdl-switch__input" v-model="$root.$data.enable_show_msg"/>
 					      </label>
 					    </span>
 					  </li>

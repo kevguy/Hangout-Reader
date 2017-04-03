@@ -66,8 +66,6 @@ let createSelectImageStream = function createSelectImageStream(elementId, vueIns
 						}	
 					};
 				});
-			} else {
-				return Rx.Observable.just(0);
 			}
 		} 
 		return Rx.Observable.just(0);

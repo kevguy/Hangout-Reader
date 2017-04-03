@@ -433,7 +433,7 @@
 					    </span>
 					    <span class="mdl-list__item-secondary-action">
 					      <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="show-person-switch">
-					        <input type="checkbox" id="show-person-switch" class="mdl-switch__input" />
+					        <input type="checkbox" id="show-person-switch" class="mdl-switch__input" v-model="$root.$data.enable_show_person"/>
 					      </label>
 					    </span>
 					  </li>
@@ -444,7 +444,7 @@
 					    </span>
 					    <span class="mdl-list__item-secondary-action">
 					      <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="show-time-switch">
-					        <input type="checkbox" id="show-time-switch" class="mdl-switch__input" />
+					        <input type="checkbox" id="show-time-switch" class="mdl-switch__input" v-model="$root.$data.enable_show_time"/>
 					      </label>
 					    </span>
 					  </li>
@@ -455,7 +455,7 @@
 					    </span>
 					    <span class="mdl-list__item-secondary-action">
 					      <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="show-msg-switch">
-					        <input type="checkbox" id="show-msg-switch" class="mdl-switch__input" />
+					        <input type="checkbox" id="show-msg-switch" class="mdl-switch__input" v-model="$root.$data.enable_show_msg"/>
 					      </label>
 					    </span>
 					  </li>

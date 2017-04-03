@@ -16,7 +16,10 @@ function createVueStuff(){
 			conversation_list: [],
 			history: [],
 			chosen_conversation_id: 0,
-			enable_table_mode: false
+			enable_table_mode: false,
+			enable_show_person: true,
+			enable_show_time: true,
+			enable_show_msg: true,
 		}
 	};
 
