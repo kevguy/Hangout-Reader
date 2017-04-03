@@ -211,6 +211,8 @@ function handleFile(data){
 	// createVueStuff(CONVERSATION_LIST, conversations);
 	// vueInstance.conversation_list = CONVERSATION_LIST;
 	// GLOBAL_conversations = conversations;
+	// 
+	console.log(CONVERSATION_LIST);
 
 	return [CONVERSATION_LIST, conversations];
 }

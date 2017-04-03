@@ -13,6 +13,7 @@ function createVueStuff(){
 	
 	let store = {
 		state: {
+			search_results: [],
 			conversation_list: [],
 			history: [],
 			chosen_conversation_id: 0,
@@ -62,7 +63,7 @@ function createVueStuff(){
 			return {
 				sharedState: this.$root.$data,
 				chosen_conversation_id: 0,
-				enable_table_mode: false
+				enable_table_mode: false,
 			};
 		},
 		watch: {

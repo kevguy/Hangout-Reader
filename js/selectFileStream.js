@@ -19,6 +19,7 @@ let createSelectImageStream = function createSelectImageStream(elementId, vueIns
 
 	function handleFile(data){
 		vueInstance.conversation_list = data.conversation_list;
+		GLOBAL_OBJ.conversation_list = data.conversation_list;
 		GLOBAL_OBJ.conversations = data.conversations;
 
 		let el = document.querySelector('.upload-status');
@@ -45,6 +46,52 @@ let createSelectImageStream = function createSelectImageStream(elementId, vueIns
 
 		el = document.querySelector('.mdl-layout__drawer-button');
 		el.click();
+	}
+
+	function createFetchProfileImgsStream(){
+		// imageByGaiaIdMap
+
+
+		let streams = [];
+		let id_list = [];
+
+		GLOBAL_OBJ.conversation_list.map(function(list){
+			list.participants.map(function(participant){
+				id_list.push(participant.name_id);
+
+				let stream = Rx.Observable.fromPromise(fetch('https://www.googleapis.com/plus/v1/people/' + participant.name_id + 
+										'?key=AIzaSyD6SrPQUrQlVpmbC3qGR8lXwNorOW_jqH4'))
+								.flatMap(function(response){
+									if (response.ok){
+										console.log(response);
+									}
+									return Rx.Observable.just(response);
+								})
+								.catch(function(error){
+									console.log('There has been an error ', error.message);
+									return Rx.Observable.just(error);
+								});
+				streams.push(stream);
+			});
+		});
+
+		return Rx.Observable.merge(...streams);
+
+
+// 		fetch('flowers.jpg')
+// .then(function(response) {
+//   if(response.ok) {
+//     return response.blob();
+//   }
+//   throw new Error('Network response was not ok.');
+// })
+// .then(function(myBlob) { 
+//   var objectURL = URL.createObjectURL(myBlob); 
+//   myImage.src = objectURL; 
+// })
+// .catch(function(error) {
+//   console.log('There has been a problem with your fetch operation: ' + error.message);
+// });
 	}
 
 
@@ -94,6 +141,11 @@ let createSelectImageStream = function createSelectImageStream(elementId, vueIns
 		.do(function(response){
 			if (response !== 0){
 				handleFile(response.data);
+			}
+		})
+		.flatMap(function(response){
+			if (response){
+				return createFetchProfileImgsStream();	
 			}
 		});
 
@@ -150,7 +202,15 @@ let createSelectImageStream = function createSelectImageStream(elementId, vueIns
 			previewElement.classList.remove('kev-dragover');
 			dropbox.classList.remove('kev-init');
 		}
+	})
+	.flatMap(function(response){
+		if (response){
+			return createFetchProfileImgsStream();	
+		}
 	});
+	// .flatMap(function(response){
+
+	// });
 
 	// let cancelStream = Rx.Observable.create(function(o){
 	// 	appLogoCancelBtn.addEventListener('click', function(e){
