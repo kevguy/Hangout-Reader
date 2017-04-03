@@ -6,6 +6,10 @@ var Rx = require("Rx");
 
 import $ from 'jQuery';
 
+$.getJSON( "https://www.googleapis.com/plus/v1/people/115681458968227650592?key=AIzaSyD6SrPQUrQlVpmbC3qGR8lXwNorOW_jqH4", function( data ) {
+	console.log(data);
+});
+
 let createSelectImageStream = function createSelectImageStream(elementId, vueInstance, GLOBAL_OBJ){
 	
 	var worker = new Worker();
