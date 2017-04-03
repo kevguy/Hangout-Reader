@@ -334,7 +334,7 @@ webpackJsonp([0,2],[
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = function() {
-		return new Worker("/Hangout-Reader/publicx/assets/js/" + "49eb7195e23a3ae15d50.worker.js");
+		return new Worker(__webpack_require__.p + "49eb7195e23a3ae15d50.worker.js");
 	};
 
 /***/ },
