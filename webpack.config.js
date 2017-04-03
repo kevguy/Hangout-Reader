@@ -23,16 +23,17 @@ module.exports = {
 	watch: true,
 	plugins: [
 		commonsPlugin,
-		// new UglifyJSPlugin({
-		// 	// compress: { warnings: false },
-		// 	// include: /\.min\.js$/
-		// }),
+		new UglifyJSPlugin({
+			// compress: { warnings: false },
+			// include: /\.min\.js$/
+			sourceMap: true
+		}),
 		new ExtractTextPlugin("[name].css"),
-		// new OptimizeCssAssetsPlugin({
-		//     //assetNameRegExp: /\.min\.css$/,
-		//     // default is /\.css$/g
-		//     cssProcessorOptions: { discardComments: { removeAll: true } }
-		// })
+		new OptimizeCssAssetsPlugin({
+		    //assetNameRegExp: /\.min\.css$/,
+		    // default is /\.css$/g
+		    cssProcessorOptions: { discardComments: { removeAll: true } }
+		})
 	],
 	devServer: {
 		contentBase: 'public'
@@ -88,5 +89,6 @@ module.exports = {
         "dialogPolyfill": "dialogPolyfill",
         "Rx": "Rx",
         "twemoji": "twemoji"
-    }
+    },
+    devtool: 'source-map'
 };

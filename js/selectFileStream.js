@@ -3,7 +3,6 @@
 
 var Worker = require("worker!./uploadfile-worker");
 var Rx = require("Rx");
-// var document = typeof document === 'undefined' ? '' : document;
 
 let createSelectImageStream = function createSelectImageStream(elementId, vueInstance, GLOBAL_OBJ){
 	
@@ -11,15 +10,10 @@ let createSelectImageStream = function createSelectImageStream(elementId, vueIns
 
 	var container = '#' + elementId;
 
-
 	var appLogoInputElement = document.querySelector(container + ' input[type="file"].kev-inputFile');
 	var appLogoInputFileNameElement = document.querySelector(container + ' input[type="text"].kev-inputFileName');
-	// var appLogoCancelBtn = document.querySelector(container + ' button.kev-cancelBtn');
 	var dropbox = document.querySelector(container + ' div.kev-dropzone');
 	var previewElement = document.querySelector(container + ' .kev-img-container > img.kev-preview');
-	var dropMsgElement = document.querySelector(container + ' .kev-drop-msg');
-	console.log(dropMsgElement);
-	// var uploadPreviewElement = document.querySelector(container + ' .kev-upload-preview');
 	var uploadBtn = document.querySelector(container + ' .kev-inputFile-btn');
 
 
@@ -39,8 +33,12 @@ let createSelectImageStream = function createSelectImageStream(elementId, vueIns
 		let snackbar = document.querySelector('#load-complete');
 		let snackbarData = {
 	      message: 'JSON loaded',
-	      timeout: 10000000000,
-	      actionHandler: function(event){console.log(event); snackbar.classList.remove('mdl-snackbar--active');},
+	      timeout: 5000,
+	      actionHandler: function(event){
+	      	if (event){
+	      		snackbar.classList.remove('mdl-snackbar--active');	
+	      	}
+	      },
 	      actionText: 'Close'
 	    };
 		snackbar.MaterialSnackbar.showSnackbar(snackbarData);
@@ -59,10 +57,7 @@ let createSelectImageStream = function createSelectImageStream(elementId, vueIns
 			if (file){
 				appLogoInputFileNameElement.value = file.name;
 
-
-				worker.postMessage({
-					file: file
-				});
+				worker.postMessage({file});
 
 				return Rx.Observable.create(function(observer){
 					worker.onmessage = function(e){
@@ -70,25 +65,12 @@ let createSelectImageStream = function createSelectImageStream(elementId, vueIns
 							observer.next({data: e.data});
 						}	
 					};
-					// var reader = new FileReader();
-					// reader.readAsText(file, "UTF-8");
-
-					// reader.onload = function(evt){
-					// 	console.log("Loaded: " + evt.target.result.length);
-					// 	observer.next(evt.target.result);
-					// }
-
-					// reader.onerror = function(err){
-					// 	observer.error(err);
-					// 	alert("Error ");
-					// }
 				});
 			} else {
 				return Rx.Observable.just(0);
 			}
-		} else {
-			return Rx.Observable.just(0);
-		}
+		} 
+		return Rx.Observable.just(0);
 	}
 
 	let uploadBtnStream = Rx.Observable.create(function(o){

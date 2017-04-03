@@ -4,14 +4,11 @@
 // importScripts('https://cdnjs.cloudflare.com/ajax/libs/twemoji/1.2.1/twemoji.min.js');
 var twemoji = require('twemoji');
 
-// var self = typeof self === 'undefined' ? '' : self;
-
 let ALL_PARTICIPANTS = {};
 let CONVERSATION_LIST = [];
 let CONVERSATIONS = {};
 
 // let nameByConversationMap = new Map();
-
 
 function zeroPad(string) {
 	return (string < 10) ? "0" + string : string;
@@ -28,12 +25,8 @@ function formatTimestamp(timestamp) {
 	return formattedDate + " " + formattedTime;
 }
 
-
-
 function getParticipantsAndConversationList(data){
 	let g_conversation_list = data.conversation_state;
-
-
 
 	let conversationList = g_conversation_list.map(function(item){
 		let g_participant_data = item.conversation_state.conversation.participant_data;
@@ -76,12 +69,6 @@ function getParticipantsAndConversationList(data){
 		});
 		list = list.substr(2);
 
-		// let list = participants.reduce(function(acc, val){
-		// 	console.log(acc.name);
-		// 	return val + ', ' + acc.name;
-		// }, '');
-		// console.log(list);
-
 		return {
 			id: g_conversation_id, 
 			participants,
@@ -106,7 +93,13 @@ function getConversations(data){
 			let msgtime = formatTimestamp(timestamp);
 			let sender = event.sender_id.gaia_id;
 			let sender_name = 'Unknown';
-			let content = {};
+			let content = {
+				message: '',
+				photo: {
+					url: '',
+					thumbnail: ''
+				}
+			};
 
 			if (event.chat_message){
 				let chatMsg = event.chat_message;
@@ -120,10 +113,6 @@ function getConversations(data){
 							return acc + twemoji.parse(segment.text);
 						}
 					}, '');
-					// console.log(content.message);
-
-				} else {
-					content.message = '';
 				}
 
 				// Try and get photos
@@ -143,23 +132,9 @@ function getConversations(data){
 					});
 					// seems like only one photo shows up every time
 					content.photo = content.photo[0];
-					// console.log(content.photo);
-					// 
-
-				} else {
-					content.photo = {
-						url:'',
-						thumbnail: ''
-					};
 				}
 
 			} else if (event.event_type === 'HANGOUT_EVENT'){
-				content.message = '';
-				content.photo = {
-					url:'',
-					thumbnail: ''
-				};
-				console.log(event.hangout_event);
 				if (event.hangout_event.media_type === 'AUDIO_ONLY'){
 					if (event.hangout_event.hangout_duration_secs){
 						content.message = 'Voice Call: ' + event.hangout_event.hangout_duration_secs + ' seconds';	
@@ -172,15 +147,7 @@ function getConversations(data){
 					} else {
 						content.message = 'Failed video call.';
 					}
-					
 				}
-
-			} else {
-				content.message = '';
-				content.photo = {
-						url:'',
-						thumbnail: ''
-					};
 			}
 
 			if (ALL_PARTICIPANTS[sender]){
@@ -202,17 +169,10 @@ function getConversations(data){
 		history.sort(function(a, b){
 			var keyA = a.timestamp,
 			    keyB = b.timestamp;
-			if( keyA < keyB ) {
-				return -1;
-			}
-			if( keyA > keyB ) {
-				return 1;
-			}
+			if( keyA < keyB ) { return -1; }
+			if( keyA > keyB ) { return 1; }
 			return 0;
 		});
-
-		// console.log(conversationList[id]);
-		// conversationList[id].history = history;
 
 		return {
 			conversation_id: g_conversation_id,
@@ -234,18 +194,17 @@ function getConversations(data){
 function handleFile(data){
 
 	let Hangouts = JSON.parse(data);
-	// let result = awesome.data_preprocess(Hangouts);
 	CONVERSATION_LIST = getParticipantsAndConversationList(Hangouts);
 	CONVERSATIONS = getConversations(Hangouts);
-	console.log(CONVERSATION_LIST);
-	console.log(CONVERSATIONS);
+	// console.log(CONVERSATION_LIST);
+	// console.log(CONVERSATIONS);
 	// console.log(result.conversation_list);
 	// console.log(result.conversations);
 	// console.log(result.all_participants);
 	
 	let conversations = new Map();
 	CONVERSATIONS.map(function(item){
-		console.log(item.conversation_id);
+		// console.log(item.conversation_id);
 		conversations.set(item.conversation_id, item.history);	
 	});
 	// console.log(conversations.get('UgylVwHUsKjYT5sSElJ4AaABAQ'));
@@ -256,39 +215,12 @@ function handleFile(data){
 	// GLOBAL_conversations = conversations;
 
 	return [CONVERSATION_LIST, conversations];
-	
-
-	// let el = document.querySelector('.upload-status');
-	// el.classList.remove('upload-complete-not-visible');
-
-	// el = document.querySelector('.upload-progress-bar');
-	// el.classList.add('progress-bar-not-visible');
-
-	// el = document.querySelector('.upload-dialog');
-	// el.classList.add('upload-not-visible');
-
-	// let snackbar = document.querySelector('#load-complete');
-	// let snackbarData = {
- //      message: 'JSON loaded',
- //      timeout: 10000000000,
- //      actionHandler: function(event){snackbar.classList.remove('mdl-snackbar--active')},
- //      actionText: 'Close'
- //    };
-	// snackbar.MaterialSnackbar.showSnackbar(snackbarData);
-
-	// el = document.querySelector('.mdl-layout__drawer-button');
-	// el.click();
-
 }
 
 
 
 
 self.onmessage = function(e) {
-	self.postMessage("web worker says hi");
-	
-	console.log('someone sent me sth!');
-
 	if (e.data.file){
 		self.postMessage("see a file");
 
@@ -309,8 +241,6 @@ self.onmessage = function(e) {
 				let conversation_list = result[0];
 				let conversations = result[1];
 
-
-				console.log("just finish reading file");
 				worker.postMessage({
 					conversation_list,
 					conversations
@@ -320,9 +250,7 @@ self.onmessage = function(e) {
 
 		reader.onerror = (function(worker){
 			return function(err){
-				console.log(err);
-				console.log("just finish reading file error");
-				worker.postMessage("Read kev error");
+				worker.postMessage(err);
 			};
 		})(self);
 	}
