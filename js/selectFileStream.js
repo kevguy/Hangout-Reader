@@ -67,8 +67,9 @@ let createSelectImageStream = function createSelectImageStream(elementId, vueIns
 				let stream = Rx.Observable.fromPromise($.getJSON('https://www.googleapis.com/plus/v1/people/' + participant.name_id + 
 										'?key=AIzaSyD6SrPQUrQlVpmbC3qGR8lXwNorOW_jqH4'))
 								.flatMap(function(response){
-									if (response){
+									if (!response.error){
 										console.log(response);
+										console.log(response.image.url);
 										if (!GLOBAL_OBJ.imageByGaiaIdMap.get(participant.name_id) && response.image){
 											console.log('lets do this');
 											GLOBAL_OBJ.imageByGaiaIdMap.set(participant.name_id, response.image.url);
