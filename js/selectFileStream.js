@@ -65,11 +65,11 @@ let createSelectImageStream = function createSelectImageStream(elementId, vueIns
 									if (response.ok){
 										console.log(response);
 									}
-									return Rx.Observable.just(response);
+									return Rx.Observable.of(response);
 								})
 								.catch(function(error){
 									console.log('There has been an error ', error.message);
-									return Rx.Observable.just(error);
+									return Rx.Observable.of(error);
 								});
 				streams.push(stream);
 			});
