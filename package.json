@@ -1,0 +1,46 @@
+{
+  "name": "hangout-reader",
+  "version": "1.0.0",
+  "description": "",
+  "main": "fileupload.js",
+  "dependencies": {
+    "twemoji": "^2.2.5"
+  },
+  "devDependencies": {
+    "and": "0.0.0",
+    "autoprefixer-loader": "^3.2.0",
+    "babel-core": "^6.2.1",
+    "babel-loader": "^6.2.0",
+    "babel-preset-es2015": "^6.1.18",
+    "css-loader": "^0.27.3",
+    "extract-text-webpack-plugin": "^1.0.1",
+    "file-loader": "^0.10.1",
+    "jshint": "^2.8.0",
+    "jshint-loader": "^0.8.3",
+    "json-loader": "^0.5.4",
+    "node-libs-browser": "^0.5.3",
+    "optimize-css-assets-webpack-plugin": "^1.3.0",
+    "sass-loader": "^6.0.3",
+    "strip-json-comments": "^2.0.1",
+    "strip-loader": "^0.1.2",
+    "style-loader": "^0.16.0",
+    "uglifyjs-webpack-plugin": "^0.3.1",
+    "url-loader": "^0.5.8",
+    "webpack": "^1.12.9",
+    "webpack-dev-server": "^1.4.7",
+    "worker-loader": "^0.8.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kevguy/Hangout-Reader.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kevguy/Hangout-Reader/issues"
+  },
+  "homepage": "https://github.com/kevguy/Hangout-Reader#readme"
+}
