@@ -1,0 +1,45 @@
+@font-face {
+	font-family: 'Lora';
+
+	/* These can be loaded thanks to url-loader */
+	src: url('../fonts/Lora-Regular.ttf');
+	src: url('../fonts/Lora-Italic.ttf');
+	src: url('../fonts/Lora-Bold.ttf');
+	src: url('../fonts/Lora-BoldItalic.ttf');
+}
+
+body {
+	font-family: 'Lora, Helvetica, Arial';
+	padding-top: 80px;
+}
+
+.navbar {
+	background-image: linear-gradient(to bottom, #007C0C 0, #000C0C 100%);
+}
+
+
+h1 {
+	padding: 15px;
+
+	border: {
+		color: red;
+		style: solid;
+		width: 1px;
+	}
+
+	
+	background: linear-gradient(to top, black, white);
+	display: flex;
+	transition: transform 1s;
+
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+
+}
+
+.bg_header_img{
+	background: url('../images/scrubs_1.jpg') -131px 1px no-repeat;
+	margin-right: 15px;
+	height: 150px;
+	width: 150px;
+}
