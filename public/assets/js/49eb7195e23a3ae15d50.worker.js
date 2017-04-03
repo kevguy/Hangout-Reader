@@ -34,7 +34,7 @@
 /******/ 	__webpack_require__.c = installedModules;
 
 /******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "./public/assets/js/";
+/******/ 	__webpack_require__.p = "Hangout-Reader/public/assets/js/";
 
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(0);
