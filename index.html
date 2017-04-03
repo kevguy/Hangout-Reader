@@ -99,7 +99,7 @@
 
 				<detail-vue></detail-vue>
 
-				<div style="display:none">
+				<div style="display:none;">
 					<div class="demo-card-wide mdl-card mdl-shadow--2dp">
 						<div class="mdl-card__title">
 							<h2 class="mdl-card__title-text">Welcome</h2>
@@ -152,11 +152,15 @@
 						<li class="mdl-list__item mdl-list__item--three-line mdl-shadow--2dp fuck">
 							<span class="mdl-list__item-primary-content">
 								<i class="material-icons mdl-list__item-avatar">person</i>
-								<span>Bryan Cranston</span>
+								<span>Bryan Cranston</span> <span style="">2016-01-01 12:30</span>
 								<span class="mdl-list__item-text-body">
 									Bryan Cranston played the role of Walter in Breaking Bad. He is also known
 									for playing Hal in Malcom in the Middle.
 								</span>
+								<span class="mdl-list__item-text-body" style="float: right;font-style: italic;margin-top:8px;font-size:12px;">
+									2016-03-03 12:30
+								</span>
+								
 							</span>
 							<span class="mdl-list__item-secondary-content">
 								<a class="mdl-list__item-secondary-action" href="#"><i class="material-icons">star</i></a>
@@ -289,7 +293,7 @@
 	<template id="menu-vue-component">
 		<nav class="mdl-navigation navigation-drawer">
 			<a class="mdl-navigation__link mdl-menu__item--full-bleed-divider" href="javascript:void(0)"><i class="material-icons">home</i>Home</a>
-	      <a class="mdl-navigation__link" href="javascript:void(0)" v-for="conv_list in $root.$data.conversation_list" @click="dummy(conv_list.id)">{{conv_list.list}}</a>
+	      <a class="mdl-navigation__link" href="javascript:void(0)" v-for="conv_list in $root.$data.conversation_list" @click="switchConv(conv_list.id)">{{conv_list.list}}</a>
 	      <a class="mdl-navigation__link mdl-menu__item--full-bleed-divider" href=""></a>
 	      <a class="mdl-navigation__link" href="javascript:void(0)" @click="openSettingsDialog()"><i class="material-icons">settings</i>Settings</a>
 	      <a class="mdl-navigation__link mdl-menu__item--full-bleed-divider" href=""></a>
@@ -304,7 +308,7 @@
 				<li class="mdl-list__item mdl-list__item--three-line mdl-shadow--2dp fuck" v-for="text in $root.$data.history">
 				    <span class="mdl-list__item-primary-content">
 				      <i class="material-icons  mdl-list__item-avatar">person</i>
-				      <span>{{text.sender_name}} {{text.msgtime}}</span>
+				      <span>{{text.sender_name}}</span>
 				      <template v-if="text.content.message">
 				      	<span class="mdl-list__item-text-body" v-html="text.content.message"></span>
 				      </template>
@@ -313,11 +317,12 @@
 							  <div class="mdl-card__title mdl-card--expand"></div>
 							  <div class="mdl-card__actions">
 							    <span class="demo-card-image__filename" >     </span>
-						  </div>
+						  		</div>
 					  </template>
-					</div>
+					  <span class="mdl-list__item-text-body" style="float: right;font-style: italic;margin-top:8px;font-size:12px;">
+									{{text.msgtime}}
+						</span>
 				    </span>
-				    
 				  </li>
 			</ul>
 		</div>

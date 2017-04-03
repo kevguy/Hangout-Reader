@@ -8,8 +8,6 @@ let ALL_PARTICIPANTS = {};
 let CONVERSATION_LIST = [];
 let CONVERSATIONS = {};
 
-// let nameByConversationMap = new Map();
-
 function zeroPad(string) {
 	return (string < 10) ? "0" + string : string;
 }

@@ -5,7 +5,8 @@ import Vue from 'Vue';
 import dialogPolyfill from 'dialogPolyfill';
 
 let GLOBAL_OBJ = {
-	conversations: []
+	conversations: [],
+	imageByGaiaIdMap: new Map()
 };
 
 function createVueStuff(){
