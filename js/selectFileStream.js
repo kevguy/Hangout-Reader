@@ -4,6 +4,8 @@
 var Worker = require("worker!./uploadfile-worker");
 var Rx = require("Rx");
 
+import $ from 'jQuery';
+
 let createSelectImageStream = function createSelectImageStream(elementId, vueInstance, GLOBAL_OBJ){
 	
 	var worker = new Worker();
@@ -49,9 +51,6 @@ let createSelectImageStream = function createSelectImageStream(elementId, vueIns
 	}
 
 	function createFetchProfileImgsStream(){
-		// imageByGaiaIdMap
-
-
 		let streams = [];
 		let id_list = [];
 
@@ -59,11 +58,16 @@ let createSelectImageStream = function createSelectImageStream(elementId, vueIns
 			list.participants.map(function(participant){
 				id_list.push(participant.name_id);
 
-				let stream = Rx.Observable.fromPromise(fetch('https://www.googleapis.com/plus/v1/people/' + participant.name_id + 
+				//let stream = Rx.Observable.fromPromise(fetch('https://www.googleapis.com/plus/v1/people/' + participant.name_id + 
+				//						'?key=AIzaSyD6SrPQUrQlVpmbC3qGR8lXwNorOW_jqH4'))
+				let stream = Rx.Observable.fromPromise($.getJSON('https://www.googleapis.com/plus/v1/people/' + participant.name_id + 
 										'?key=AIzaSyD6SrPQUrQlVpmbC3qGR8lXwNorOW_jqH4'))
 								.flatMap(function(response){
 									if (response.ok){
 										console.log(response);
+										if (!GLOBAL_OBJ.imageByGaiaIdMap.get(participant.name_id) && response.image){
+											GLOBAL_OBJ.imageByGaiaIdMap.set(participant.name_id, response.image.url);
+										}
 									}
 									return Rx.Observable.of(response);
 								})
@@ -74,6 +78,8 @@ let createSelectImageStream = function createSelectImageStream(elementId, vueIns
 				streams.push(stream);
 			});
 		});
+
+		console.log(GLOBAL_OBJ.conversations);
 
 		return Rx.Observable.merge(...streams);
 

@@ -85,6 +85,7 @@ module.exports = {
 	externals: {
         // require("jquery") is external and available
         //  on the global var jQuery
+        "jQuery": "jQuery",
         "Vue": "Vue",
         "dialogPolyfill": "dialogPolyfill",
         "Rx": "Rx",

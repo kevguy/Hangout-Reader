@@ -81,6 +81,15 @@ function createVueStuff(){
         	},
 		},
 		methods: {
+			getImageUrl(senderId){
+				let url = GLOBAL_OBJ.imageByGaiaIdMap.get(senderId);
+				if (url){
+					console.log(url);
+					return url;
+				}
+				console.log('bruh');
+				return '';
+			}
 		}
 	});
 
