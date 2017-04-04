@@ -62,35 +62,35 @@ let createSelectImageStream = function createSelectImageStream(elementId, vueIns
 			list.participants.map(function(participant){
 				id_list.push(participant.name_id);
 
-				let stream = Rx.Observable.fromPromise(
-					fetch('https://www.googleapis.com/plus/v1/people/' + participant.name_id + 
-										'?key=AIzaSyD6SrPQUrQlVpmbC3qGR8lXwNorOW_jqH4')
-					.then(function(response){
-						return response.json();
-					}))
-				// let stream = Rx.Observable.fromPromise($.getJSON('https://www.googleapis.com/plus/v1/people/' + participant.name_id + 
-				// 						'?key=AIzaSyD6SrPQUrQlVpmbC3qGR8lXwNorOW_jqH4'))
-								.flatMap(function(response){
-									if (!response.error){
-										console.log(response);
-										console.log(response.image.url);
-										if (!GLOBAL_OBJ.imageByGaiaIdMap.get(participant.name_id) && response.image){
-											console.log('lets do this');
-											GLOBAL_OBJ.imageByGaiaIdMap.set(participant.name_id, response.image.url);
-										}
-									}
-									console.log(GLOBAL_OBJ.imageByGaiaIdMap);
-									return Rx.Observable.of(response);
-								})
-								.catch(function(error){
-									console.log('There has been an error ', error.message);
-									return Rx.Observable.of(error);
-								});
-				streams.push(stream);
+				if (!GLOBAL_OBJ.imageByGaiaIdMap.get(participant.name_id)){
+					let stream = Rx.Observable.fromPromise(
+						fetch('https://www.googleapis.com/plus/v1/people/' + participant.name_id + 
+										'?key=AIzaSyD6SrPQUrQlVpmbC3qGR8lXwNorOW_jqH4'))
+						.flatMap(function(response){
+							return Rx.Observable.fromPromise(response.json());
+						})
+						.catch(function(error){
+							console.log('There has been an error ', error.message);
+							return Rx.Observable.of(error);
+						})
+						.flatMap(function(response){
+							if (!response.error){
+								console.log(response);
+								console.log(response.image.url);
+								if (response.image){
+									console.log('lets do this');
+									GLOBAL_OBJ.imageByGaiaIdMap.set(participant.name_id, response.image.url);
+								}
+							}
+							// console.log(GLOBAL_OBJ.imageByGaiaIdMap);
+							return Rx.Observable.of(response);
+						});
+					streams.push(stream);
+				}	
 			});
 		});
 
-		console.log(GLOBAL_OBJ.conversations);
+		// console.log(GLOBAL_OBJ.conversations);
 
 		return Rx.Observable.merge(...streams);
 
