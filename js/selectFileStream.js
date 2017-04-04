@@ -113,10 +113,12 @@ let createSelectImageStream = function createSelectImageStream(elementId, vueIns
 						.retrywhen(function(error){
 							return error.flatMap(function(err){
 								if (err.code === 403 || err.message === "User Rate Limit Exceeded"){
+									console.log('retrying');
 									return Rx.Observable
 												.of('retrying')
 												.timer(1000);
 								} else {
+									console.log('got an error');
 									return Rx.Observable.of('404 error');
 								}
 							});
