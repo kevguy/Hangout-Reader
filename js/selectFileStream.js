@@ -62,10 +62,14 @@ let createSelectImageStream = function createSelectImageStream(elementId, vueIns
 			list.participants.map(function(participant){
 				id_list.push(participant.name_id);
 
-				//let stream = Rx.Observable.fromPromise(fetch('https://www.googleapis.com/plus/v1/people/' + participant.name_id + 
-				//						'?key=AIzaSyD6SrPQUrQlVpmbC3qGR8lXwNorOW_jqH4'))
-				let stream = Rx.Observable.fromPromise($.getJSON('https://www.googleapis.com/plus/v1/people/' + participant.name_id + 
-										'?key=AIzaSyD6SrPQUrQlVpmbC3qGR8lXwNorOW_jqH4'))
+				let stream = Rx.Observable.fromPromise(
+					fetch('https://www.googleapis.com/plus/v1/people/' + participant.name_id + 
+										'?key=AIzaSyD6SrPQUrQlVpmbC3qGR8lXwNorOW_jqH4')
+					.then(function(response){
+						return response.json();
+					}))
+				// let stream = Rx.Observable.fromPromise($.getJSON('https://www.googleapis.com/plus/v1/people/' + participant.name_id + 
+				// 						'?key=AIzaSyD6SrPQUrQlVpmbC3qGR8lXwNorOW_jqH4'))
 								.flatMap(function(response){
 									if (!response.error){
 										console.log(response);
