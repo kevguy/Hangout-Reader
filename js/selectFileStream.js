@@ -1,4 +1,5 @@
 /*jslint node: true */
+/*jshint sub:true*/
 'use strict';
 
 var Worker = require("worker!./uploadfile-worker");
@@ -54,27 +55,32 @@ let createSelectImageStream = function createSelectImageStream(elementId, vueIns
 		el.click();
 	}
 
-	// function createSingleFetchProfileImgStream(sender_id){
-	// 	let stream = Rx.Observable.fromPromise(
-	// 		)
-	// 		.flatMap(function(response){
-	// 			return Rx.Observable.fromPromise(response.json());
-	// 		})
-	// 		.retrywhen(function(error){
-	// 			return error.flatMap(function(err){
-	// 				if (err.code === 403 || err.message === "User Rate Limit Exceeded"){
-	// 					return Rx.Observable
-	// 								.of('retrying')
-	// 								.timer(1000);
-	// 				} else {
-	// 					return Rx.Observable.of('404 error');
-	// 				}
-	// 			});
-	// 		})
-	// 		// .catch(function(error){
-	// 		// 	console.log('')
-	// 		// })
-	// }
+	function createSingleFetchProfileImgStream(gala_id){
+		let stream = Rx.Observable.fromPromise(
+			fetch('https://www.googleapis.com/plus/v1/people/' + gala_id + 
+							'?key=AIzaSyD6SrPQUrQlVpmbC3qGR8lXwNorOW_jqH4')
+			)
+			.flatMap(function(response){
+				return Rx.Observable.fromPromise(response.json());
+			})
+			.flatMap(function(response){
+				if (!response.error){
+					console.log(response);
+					console.log(response.image.url);
+					console.log(response['displayName']);
+					if (response.image){
+						console.log('lets do this');
+						GLOBAL_OBJ.imageByGaiaIdMap.set(gala_id, response.image.url);
+						return Rx.Observable.of(response);
+					}
+				} else {
+					// console.log(response);
+					return createSingleFetchProfileImgStream(gala_id).delay(1000);
+				}
+				// console.log(GLOBAL_OBJ.imageByGaiaIdMap);				
+			});
+		return stream;
+	}
 
 
 
@@ -103,38 +109,7 @@ let createSelectImageStream = function createSelectImageStream(elementId, vueIns
 					// 	})
 
 
-					let stream = Rx.Observable.fromPromise(
-						fetch('https://www.googleapis.com/plus/v1/people/' + participant.name_id + 
-										'?key=AIzaSyD6SrPQUrQlVpmbC3qGR8lXwNorOW_jqH4')
-						)
-						.flatMap(function(response){
-							return Rx.Observable.fromPromise(response.json());
-						})
-						.retrywhen(function(error){
-							return error.flatMap(function(err){
-								if (err.code === 403 || err.message === "User Rate Limit Exceeded"){
-									console.log('retrying');
-									return Rx.Observable
-												.of('retrying')
-												.timer(1000);
-								} else {
-									console.log('got an error');
-									return Rx.Observable.of('404 error');
-								}
-							});
-						})
-						.flatMap(function(response){
-							if (!response.error){
-								console.log(response);
-								console.log(response.image.url);
-								if (response.image){
-									console.log('lets do this');
-									GLOBAL_OBJ.imageByGaiaIdMap.set(participant.name_id, response.image.url);
-								}
-							}
-							// console.log(GLOBAL_OBJ.imageByGaiaIdMap);
-							return Rx.Observable.of(response);
-						});
+					let stream = createSingleFetchProfileImgStream(participant.name_id);
 					streams.push(stream);
 				}	
 			});
