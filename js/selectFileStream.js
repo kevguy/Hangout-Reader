@@ -54,6 +54,34 @@ let createSelectImageStream = function createSelectImageStream(elementId, vueIns
 		el.click();
 	}
 
+	// function createSingleFetchProfileImgStream(sender_id){
+	// 	let stream = Rx.Observable.fromPromise(
+	// 		)
+	// 		.flatMap(function(response){
+	// 			return Rx.Observable.fromPromise(response.json());
+	// 		})
+	// 		.retrywhen(function(error){
+	// 			return error.flatMap(function(err){
+	// 				if (err.code === 403 || err.message === "User Rate Limit Exceeded"){
+	// 					return Rx.Observable
+	// 								.of('retrying')
+	// 								.timer(1000);
+	// 				} else {
+	// 					return Rx.Observable.of('404 error');
+	// 				}
+	// 			});
+	// 		})
+	// 		// .catch(function(error){
+	// 		// 	console.log('')
+	// 		// })
+	// }
+
+
+
+
+
+	
+
 	function createFetchProfileImgsStream(){
 		let streams = [];
 		let id_list = [];
@@ -63,15 +91,35 @@ let createSelectImageStream = function createSelectImageStream(elementId, vueIns
 				id_list.push(participant.name_id);
 
 				if (!GLOBAL_OBJ.imageByGaiaIdMap.get(participant.name_id)){
+					// let stream = Rx.Observable.fromPromise(
+					// 	fetch('https://www.googleapis.com/plus/v1/people/' + participant.name_id + 
+					// 					'?key=AIzaSyD6SrPQUrQlVpmbC3qGR8lXwNorOW_jqH4'))
+					// 	.flatMap(function(response){
+					// 		return Rx.Observable.fromPromise(response.json());
+					// 	})
+					// 	.catch(function(error){
+					// 		console.log('There has been an error ', error.message);
+					// 		return Rx.Observable.of(error);
+					// 	})
+
+
 					let stream = Rx.Observable.fromPromise(
 						fetch('https://www.googleapis.com/plus/v1/people/' + participant.name_id + 
-										'?key=AIzaSyD6SrPQUrQlVpmbC3qGR8lXwNorOW_jqH4'))
+										'?key=AIzaSyD6SrPQUrQlVpmbC3qGR8lXwNorOW_jqH4')
+						)
 						.flatMap(function(response){
 							return Rx.Observable.fromPromise(response.json());
 						})
-						.catch(function(error){
-							console.log('There has been an error ', error.message);
-							return Rx.Observable.of(error);
+						.retrywhen(function(error){
+							return error.flatMap(function(err){
+								if (err.code === 403 || err.message === "User Rate Limit Exceeded"){
+									return Rx.Observable
+												.of('retrying')
+												.timer(1000);
+								} else {
+									return Rx.Observable.of('404 error');
+								}
+							});
 						})
 						.flatMap(function(response){
 							if (!response.error){
