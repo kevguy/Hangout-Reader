@@ -10,7 +10,6 @@
 </head>
 <body>
 
-
 	<!-- Always shows a header, even in smaller screens. -->
 	<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header" id="app">
 		<header class="mdl-layout__header">
@@ -50,7 +49,7 @@
 					<div class="mdl-card__title">
 						<h2 class="mdl-card__title-text">Welcome</h2>
 					</div>
-					<div class="mdl-card__supporting-text">	
+					<div class="mdl-card__supporting-text">
 						Upload the Hangouts.json file here:
 					</div>
 					<div class="mdl-card__actions mdl-card--border file-container" id="app-logo-container">
@@ -77,10 +76,10 @@
 									<p class="kev-drop-msg" style="vertical-align:middle">Drop JSON file here</p>
 								</div>
 								<div class="kev-img-container image-grid" style="z-index:1;">
-									<img class="kev-preview image-resize"></img>	
-								</div>	
+									<img class="kev-preview image-resize"></img>
+								</div>
 							</div>
-							
+
 						</div>
 					</div>
 					<div class="mdl-card__actions mdl-card--border">
@@ -95,7 +94,7 @@
 
 				<settings-vue></settings-vue>
 
-				
+
 
 				<detail-vue></detail-vue>
 
@@ -104,7 +103,7 @@
 						<div class="mdl-card__title">
 							<h2 class="mdl-card__title-text">Welcome</h2>
 						</div>
-						<div class="mdl-card__supporting-text">	
+						<div class="mdl-card__supporting-text">
 							Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 							Mauris sagittis pellentesque lacus eleifend lacinia...
 						</div>
@@ -160,7 +159,7 @@
 								<span class="mdl-list__item-text-body" style="float: right;font-style: italic;margin-top:8px;font-size:12px;">
 									2016-03-03 12:30
 								</span>
-								
+
 							</span>
 							<span class="mdl-list__item-secondary-content">
 								<a class="mdl-list__item-secondary-action" href="#"><i class="material-icons">star</i></a>
@@ -315,7 +314,7 @@
 								<i class="material-icons  mdl-list__item-avatar">person</i>
 							</template>
 							<span>{{text.sender_name}}</span>
-						</template>		      
+						</template>
 						<template v-if="$root.$data.enable_show_msg">
 							<template v-if="text.content.message">
 								<span class="mdl-list__item-text-body" v-html="text.content.message"></span>
@@ -327,7 +326,7 @@
 										<span class="demo-card-image__filename" >     </span>
 									</div>
 								</div>
-							</template>	
+							</template>
 						</template>
 						<template v-if="$root.$data.enable_show_time">
 							<span class="mdl-list__item-text-body" style="float: right;font-style: italic;margin-top:8px;font-size:12px;">
@@ -344,22 +343,22 @@
 					<tr>
 						<template v-if="$root.$data.enable_show_time"><th>Time</th></template>
 						<template v-if="$root.$data.enable_show_person"><th>Person</th></template>
-						<template v-if="$root.$data.enable_show_msg"><th>Message</th></template>					
+						<template v-if="$root.$data.enable_show_msg"><th>Message</th></template>
 					</tr>
 				</thead>
 				<tbody>
-									
+
 					<!-- <tr>
 						<td>$2.90</td>
 						<td class="mdl-data-table__cell--non-numeric" >Kevin Lai</td>
 						<td style="max-width=300px;">Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)</td>
-						
+
 					</tr>
 					<tr>
 						<td>$1.25</td>
 						<td class="mdl-data-table__cell--non-numeric">Plywood (Birch)</td>
 						<td style="max-width=300px;">50</td>
-						
+
 					</tr>
 					<tr>
 						<td>$2.35</td>
@@ -367,7 +366,7 @@
 						<td style="max-width=300px;">10</td>
 					</tr> -->
 					<template v-for="text in $root.$data.history">
-						
+
 						<template v-if="text.content.message">
 							<tr>
 								<template v-if="$root.$data.enable_show_time"><td>{{text.msgtime}}</td></template>
@@ -383,7 +382,7 @@
 				      			<template v-if="$root.$data.enable_show_msg"><td style="max-width=300px;"><img v-bind:src="text.content.photo.url" style="max-width:300px;max-height:300px"></td></template>
 				      		</tr>
 						</template>
-					</template>	
+					</template>
 				</tbody>
 			</table>
 		</div>
@@ -395,7 +394,7 @@
 			<div class="mdl-card__title">
 				<h2 class="mdl-card__title-text">Settings</h2>
 			</div>
-			<div class="mdl-card__supporting-text">	
+			<div class="mdl-card__supporting-text">
 				Apply settings here:
 			</div>
 			<div class="mdl-card__actions mdl-card--border settings-container">
@@ -481,7 +480,7 @@
 			</div>
 		</div>
 	</template>
-	
+
 	<script
   src="https://code.jquery.com/jquery-3.2.1.min.js"
   integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
