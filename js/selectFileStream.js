@@ -2,18 +2,17 @@
 /*jshint sub:true*/
 'use strict';
 
-var Worker = require("worker!./uploadfile-worker");
-var Rx = require("Rx");
-
+import Rx from 'rxjs/Rx';
 import $ from 'jQuery';
+
+
+
 
 $.getJSON( "https://www.googleapis.com/plus/v1/people/115681458968227650592?key=AIzaSyD6SrPQUrQlVpmbC3qGR8lXwNorOW_jqH4", function( data ) {
 	console.log(data);
 });
 
-let createSelectImageStream = function createSelectImageStream(elementId, vueInstance, GLOBAL_OBJ){
-	
-	var worker = new Worker();
+let createSelectImageStream = function createSelectImageStream(elementId, vueInstance, GLOBAL_OBJ, worker){
 
 	var container = '#' + elementId;
 
@@ -116,8 +115,8 @@ let createSelectImageStream = function createSelectImageStream(elementId, vueIns
 		});
 
 		// console.log(GLOBAL_OBJ.conversations);
-
-		return Rx.Observable.merge(...streams);
+		return Rx.Observable.of(1);
+		// return Rx.Observable.merge(...streams);
 
 
 // 		fetch('flowers.jpg')
@@ -146,13 +145,22 @@ let createSelectImageStream = function createSelectImageStream(elementId, vueIns
 			if (file){
 				appLogoInputFileNameElement.value = file.name;
 
-				worker.postMessage({file});
+				worker.postMessage({
+					action: 'handleJsonFile',
+					file
+				});
 
 				return Rx.Observable.create(function(observer){
 					worker.onmessage = function(e){
 						if (e.data.conversation_list){
 							observer.next({data: e.data});
-						}	
+						}
+
+						if (e.data.action === 'getProfileImgs' && e.data.name_list){
+							console.log('got name list from worker');
+							vueInstance.profileImgByGaiaMap = e.data.name_list;
+							console.log(vueInstance.profileImgByGaiaMap);
+						}
 					};
 				});
 			}
@@ -187,7 +195,8 @@ let createSelectImageStream = function createSelectImageStream(elementId, vueIns
 		})
 		.flatMap(function(response){
 			if (response){
-				return createFetchProfileImgsStream();	
+				return Rx.Observable.of(1);
+				// return createFetchProfileImgsStream();	
 			}
 		});
 

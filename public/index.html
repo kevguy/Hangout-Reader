@@ -308,8 +308,8 @@
 				<li class="mdl-list__item mdl-list__item--three-line mdl-shadow--2dp fuck" v-for="text in $root.$data.history">
 					<span class="mdl-list__item-primary-content">
 						<template v-if="$root.$data.enable_show_person">
-							<template v-if="getImageUrl(text.sender_id) != ''">
-								<img v-bind:src="getImageUrl(text.sender_id)">
+							<template v-if="$root.$data.profileImgByGaiaMap[text.sender_id]">
+								<img v-bind:src="$root.$data.profileImgByGaiaMap[text.sender_id]">
 							</template>
 							<template v-else>
 								<i class="material-icons  mdl-list__item-avatar">person</i>
@@ -488,7 +488,7 @@
   crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/5.0.1/Rx.js"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.2.6/vue.js"></script>
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twemoji/1.2.1/twemoji.min.js"></script>
+	<!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twemoji/1.2.1/twemoji.min.js"></script> -->
 	<!-- <script src="./stupid3.js"></script> -->
 	<script src="./public/assets/js/shared.js"></script>
 	<script src="./public/assets/js/about_page.js"></script>

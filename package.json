@@ -4,6 +4,7 @@
   "description": "",
   "main": "fileupload.js",
   "dependencies": {
+    "rxjs": "^5.3.0",
     "twemoji": "^2.2.5"
   },
   "devDependencies": {

@@ -3,14 +3,19 @@
 import {createSelectImageStream} from './selectFileStream';
 import Vue from 'Vue';
 import dialogPolyfill from 'dialogPolyfill';
+// import Rx from 'rxjs/Rx';
+
+var Worker = require("worker!./uploadfile-worker");
 
 let GLOBAL_OBJ = {
 	conversations: [],
 	imageByGaiaIdMap: new Map()
 };
 
-function createVueStuff(){
+function createVueStuff(worker){
 	
+	worker.postMessage({msg: 'dvsdv'});
+
 	let store = {
 		state: {
 			search_results: [],
@@ -21,6 +26,7 @@ function createVueStuff(){
 			enable_show_person: true,
 			enable_show_time: true,
 			enable_show_msg: true,
+			profileImgByGaiaMap: {}
 		}
 	};
 
@@ -47,12 +53,44 @@ function createVueStuff(){
 				this.$root.$data.chosen_conversation_id = conv_id;
 				let el = document.querySelector('.mdl-layout__obfuscator');
 				el.click();
+
+				this.getProfileImgs();
+
 			},
 			openSettingsDialog(){
 				let settingEl = document.querySelector('.setting-dialog');
 				settingEl.classList.remove("setting-not-visible");
 				let el = document.querySelector('.mdl-layout__obfuscator');
 				el.click();
+			},
+			getProfileImgs(){
+				let self = this;
+				console.log(this.$root.$data.chosen_conversation_id);
+				console.log(this.$root.$data.conversation_list[this.$root.$data.chosen_conversation_id]);
+				let name_list = this.$root.$data.conversation_list
+								.filter(function(conversation){
+									return conversation.id === self.$root.$data.chosen_conversation_id;
+								})[0]
+								.participants.map(function(participant){
+									return participant.name_id;
+								});
+				console.log(name_list);
+
+				worker.onMessage = function(e){
+					console.log(e.data);
+					if (e.data.action === 'getProfileImgs' && e.data.name_list){
+						console.log('got name list from worker');
+						this.$root.$data.profileImgByGaiaMap = e.data.name_list;
+						console.log(this.$root.$data.profileImgByGaiaMap);
+					}
+				};
+
+
+				worker.postMessage({
+					action: 'getProfileImgs',
+					name_list
+				});
+
 			}
 		}
 	});
@@ -105,7 +143,11 @@ function createVueStuff(){
 }
 
 (function(document){
-	let vueInstance = createVueStuff();
+	let worker = new Worker();
+
+	let vueInstance = createVueStuff(worker);
+
+	/* these are for showing the sample dialog */ 
 	var dialog = document.querySelector('#modal-example');
 	var closeButton = dialog.querySelector('button');
 	var showButton = document.querySelector('#show-modal-example');
@@ -124,11 +166,15 @@ function createVueStuff(){
 	};
 	showButton.addEventListener('click', showClickHandler);
 	closeButton.addEventListener('click', closeClickHandler);
+	/* ---------------------------------------------------*/
 
-	let stream = createSelectImageStream('app-logo-container', vueInstance, GLOBAL_OBJ);
+	let stream = createSelectImageStream('app-logo-container', vueInstance, GLOBAL_OBJ, worker);
 	stream.subscribe(
 		function(response){
 			console.log(response);
 		}
 	);
+
+	
+
 })(document);

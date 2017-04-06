@@ -1,257 +1,149 @@
 /*jslint node: true */
+/*jshint sub:true*/
 'use strict';
 
 // importScripts('https://cdnjs.cloudflare.com/ajax/libs/twemoji/1.2.1/twemoji.min.js');
-var twemoji = require('twemoji');
+// var twemoji = require('twemoji');
 
-let ALL_PARTICIPANTS = {};
-let CONVERSATION_LIST = [];
-let CONVERSATIONS = {};
+import { util } from './util';
+import Rx from 'rxjs/Rx';
+console.log(Rx);
 
-function zeroPad(string) {
-	return (string < 10) ? "0" + string : string;
-}
+let gaiaIdToImg = {};
 
-function formatTimestamp(timestamp) {
-	var d = new Date(timestamp/1000);
-	var formattedDate = d.getFullYear() + "-" +
-	    zeroPad(d.getMonth() + 1) + "-" +
-	    zeroPad(d.getDate());
-	var hours = zeroPad(d.getHours());
-	var minutes = zeroPad(d.getMinutes());
-	var formattedTime = hours + ":" + minutes;
-	return formattedDate + " " + formattedTime;
-}
+function handleJsonFile(e){
+	self.postMessage("see a file");
 
-function getParticipantsAndConversationList(data){
-	let g_conversation_list = data.conversation_state;
+	var file = e.data.file;
+	var reader = new FileReader();
+	reader.readAsText(file, "UTF-8");
 
-	let conversationList = g_conversation_list.map(function(item){
-		let g_participant_data = item.conversation_state.conversation.participant_data;
-		let g_conversation_id = item.conversation_id.id;
+	console.log("started reading file");
 
-		// Get all participants
-		let participants = g_participant_data.map(function(participant){
-			if(!participant.fallback_name || participant.fallback_name === null){
-				let unknown_constant = -1;
-				ALL_PARTICIPANTS[unknown_constant] = {};
-				ALL_PARTICIPANTS[unknown_constant][g_conversation_id] = 'Unknown';
+	reader.onload = (function(worker){
+		return function(evt){
 
-				return {
-					name_id: -1,
-					name: 'Unknown'
-				};
-			} else {
-				let fallback_name = participant.fallback_name;
-				let gaia_id = participant.id.gaia_id;
+			console.log("Loaded: " + evt.target.result.length);
+			// observer.next(evt.target.result);
+			console.log(util);
+			let result = util.handleFile(evt.target.result);
 
-				if (ALL_PARTICIPANTS[gaia_id]){
-					ALL_PARTICIPANTS[gaia_id][g_conversation_id] = fallback_name;
-				} else {
-					ALL_PARTICIPANTS[gaia_id] = {};
-					ALL_PARTICIPANTS[gaia_id][g_conversation_id] = fallback_name;
-				}
+			// createVueStuff(CONVERSATION_LIST, conversations);
+			let conversation_list = result[0];
+			let conversations = result[1];
 
-				return {
-					name_id: gaia_id,
-					name: fallback_name
-				};
-
-			}
-
-		});
-
-		let list = '';
-		participants.map(function(item){
-			list = list + ', ' + item.name;
-		});
-		list = list.substr(2);
-
-		return {
-			id: g_conversation_id, 
-			participants,
-			list
+			worker.postMessage({
+				conversation_list,
+				conversations
+			});
 		};
+	})(self);
 
-	});
-
-	return conversationList;
+	reader.onerror = (function(worker){
+		return function(err){
+			worker.postMessage(err);
+		};
+	})(self);
 }
 
 
-function getConversations(data){
-	let conversation_states = data.conversation_state;
 
-	let result = conversation_states.map(function(item){
-		let g_conversation_id = item.conversation_id.id;
-		let g_events = item.conversation_state.event;
+/*
+	fetch(path).then(function (response) {
+	    response.body.getReader().read().then(function(result) {
+	        return btoa(String.fromCharCode.apply(null, result.value));
+	    }).then(function(b64) {
+	        console.log(b64);
+	    });
+	});
+*/
 
-		let history = g_events.map(function(event){
-			let timestamp = event.timestamp;
-			let msgtime = formatTimestamp(timestamp);
-			let sender = event.sender_id.gaia_id;
-			let sender_name = 'Unknown';
-			let content = {
-				message: '',
-				photo: {
-					url: '',
-					thumbnail: ''
-				}
-			};
-
-			if (event.chat_message){
-				let chatMsg = event.chat_message;
-				let segments = chatMsg.message_content.segment;
-				let attachments = chatMsg.message_content.attachment;
-				
-				// Try and get messages
-				if (segments){
-					content.message = segments.reduce(function(acc, segment){
-						if (segment.text){
-							return acc + twemoji.parse(segment.text);
-						}
-					}, '');
-				}
-
-				// Try and get photos
-				if (attachments){
-					content.photo = attachments.map(function(attachment){
-						if (attachment.embed_item.type[0] === "PLUS_PHOTO"){
-							return { 
-								url: attachment.embed_item['embeds.PlusPhoto.plus_photo'].url,
-								thumbnail: attachment.embed_item['embeds.PlusPhoto.plus_photo'].thumbnail.image_url
-							};
-						} else {
-							return {
-								url: '',
-								thumbnail: ''
-							};
-						}
+function createBase64Stream(url, gala_id){
+	let stream = Rx.Observable.fromPromise(fetch(url))
+					.flatMap(function(response){
+						return Rx.Observable.fromPromise(response.body.getReader().reader());
+					})
+					.flatMap(function(result){
+						return Rx.Observable.fromPromise(btoa(String.fromCharCode.apply(null, result.value)));
+					})
+					.flatMap(function(result){
+						gaiaIdToImg[gala_id] = result;
+						return Rx.Observable.of(result);
 					});
-					// seems like only one photo shows up every time
-					content.photo = content.photo[0];
+	return stream;
+}
+
+
+function createSingleFetchProfileImgStream(gala_id){
+	let stream = Rx.Observable.fromPromise(
+		fetch('https://www.googleapis.com/plus/v1/people/' + gala_id + 
+						'?key=AIzaSyD6SrPQUrQlVpmbC3qGR8lXwNorOW_jqH4')
+		)
+		.flatMap(function(response){
+			return Rx.Observable.fromPromise(response.json());
+		})
+		.flatMap(function(response){
+			if (!response.error){
+				console.log(response);
+				console.log(response.image.url);
+				console.log(response['displayName']);
+				if (response.image){
+					console.log('lets do this');
+					gaiaIdToImg[gala_id] = response.image.url;
+					return Rx.Observable.of({
+						gala_id,
+						response
+					});
 				}
-
-			} else if (event.event_type === 'HANGOUT_EVENT'){
-				if (event.hangout_event.media_type === 'AUDIO_ONLY'){
-					if (event.hangout_event.hangout_duration_secs){
-						content.message = 'Voice Call: ' + event.hangout_event.hangout_duration_secs + ' seconds';	
-					} else {
-						content.message = 'Failed voice call.';
-					}
-				} else if (event.hangout_event.media_type === 'AUDIO_VIDEO') {
-					if (event.hangout_event.hangout_duration_secs){
-						content.message = 'Video Call: ' + event.hangout_event.hangout_duration_secs + ' seconds';	
-					} else {
-						content.message = 'Failed video call.';
-					}
-				}
+			} else {
+				// console.log(response);
+				return createSingleFetchProfileImgStream(gala_id).delay(5000);
 			}
-
-			if (ALL_PARTICIPANTS[sender]){
-				sender_name = ALL_PARTICIPANTS[sender][g_conversation_id];
-			}
-
-			return {
-				// msgTime: msgTime,
-				sender_id: sender,
-				sender_name,
-				timestamp,
-				msgtime, 
-				content
-			};
-
+			// console.log(GLOBAL_OBJ.imageByGaiaIdMap);				
+		})
+		.flatMap(function(result){
+			return createBase64Stream(result.response.image.url, result.gala_id);
 		});
-
-		// Sort events by timestamp
-		history.sort(function(a, b){
-			var keyA = a.timestamp,
-			    keyB = b.timestamp;
-			if( keyA < keyB ) { return -1; }
-			if( keyA > keyB ) { return 1; }
-			return 0;
-		});
-
-		return {
-			conversation_id: g_conversation_id,
-			history
-		};
-
-	});
-
-	return result;
+		
+	return stream;
 }
 
 
 
 
-
-
-
-
-function handleFile(data){
-
-	let Hangouts = JSON.parse(data);
-	CONVERSATION_LIST = getParticipantsAndConversationList(Hangouts);
-	CONVERSATIONS = getConversations(Hangouts);
-	// console.log(CONVERSATION_LIST);
-	// console.log(CONVERSATIONS);
-	// console.log(result.conversation_list);
-	// console.log(result.conversations);
-	// console.log(result.all_participants);
-	
-	let conversations = new Map();
-	CONVERSATIONS.map(function(item){
-		// console.log(item.conversation_id);
-		conversations.set(item.conversation_id, item.history);	
+function createFetchProfileImgsStream(name_list){
+	let streams = [];
+	name_list.map(function(name_id){
+		if (name_id !== -1){
+			let stream = createSingleFetchProfileImgStream(name_id);
+			streams.push(stream);
+		}
 	});
-	// console.log(conversations.get('UgylVwHUsKjYT5sSElJ4AaABAQ'));
+	return Rx.Observable.merge(...streams);
+}
 
 
-	// createVueStuff(CONVERSATION_LIST, conversations);
-	// vueInstance.conversation_list = CONVERSATION_LIST;
-	// GLOBAL_conversations = conversations;
-	// 
-	console.log(CONVERSATION_LIST);
-
-	return [CONVERSATION_LIST, conversations];
+function getProfileImgs(name_list){
+	gaiaIdToImg = {};
+	let stream = createFetchProfileImgsStream(name_list);
+	stream.subscribe(function(response){
+		console.log(response);
+		self.postMessage({
+			action: 'getProfileImgs',
+			name_list: gaiaIdToImg
+		});
+	});
 }
 
 
 
 
 self.onmessage = function(e) {
-	if (e.data.file){
-		self.postMessage("see a file");
+	if (e.data.file && e.data.action === 'handleJsonFile'){
+		handleJsonFile(e);
+	}
 
-		var file = e.data.file;
-		var reader = new FileReader();
-		reader.readAsText(file, "UTF-8");
-
-		console.log("started reading file");
-
-		reader.onload = (function(worker){
-			return function(evt){
-
-				console.log("Loaded: " + evt.target.result.length);
-				// observer.next(evt.target.result);
-				let result = handleFile(evt.target.result);
-
-				// createVueStuff(CONVERSATION_LIST, conversations);
-				let conversation_list = result[0];
-				let conversations = result[1];
-
-				worker.postMessage({
-					conversation_list,
-					conversations
-				});
-			};
-		})(self);
-
-		reader.onerror = (function(worker){
-			return function(err){
-				worker.postMessage(err);
-			};
-		})(self);
+	if (e.data.name_list && e.data.action === 'getProfileImgs'){
+		getProfileImgs(e.data.name_list);
 	}
 };

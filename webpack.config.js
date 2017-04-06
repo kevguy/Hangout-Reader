@@ -87,9 +87,7 @@ module.exports = {
         //  on the global var jQuery
         "jQuery": "jQuery",
         "Vue": "Vue",
-        "dialogPolyfill": "dialogPolyfill",
-        "Rx": "Rx",
-        "twemoji": "twemoji"
+        "dialogPolyfill": "dialogPolyfill"
     },
     devtool: 'source-map'
 };
