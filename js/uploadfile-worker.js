@@ -74,7 +74,7 @@ function createBase64Stream_fake(url, gala_id){
 
 
 function createBase64Stream(url, gala_id){
-	let stream = Rx.Observable.fromPromise(fetch(url, {mode: 'no-cors'}))
+	let stream = Rx.Observable.fromPromise(fetch(url))
 					.flatMap(function(response){
 						return Rx.Observable.fromPromise(response.body.getReader().read())
 									.flatMap(function(result){
