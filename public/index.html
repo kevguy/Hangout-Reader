@@ -308,7 +308,7 @@
 				<li class="mdl-list__item mdl-list__item--three-line mdl-shadow--2dp fuck" v-for="text in $root.$data.history">
 					<span class="mdl-list__item-primary-content">
 						<template v-if="$root.$data.enable_show_person">
-							<template v-if="$root.$data.profileImgByGaiaMap">
+							<template v-if="$root.$data.profileImgByGaiaMap[text.sender_id]">
 								<img v-bind:src="$root.$data.profileImgByGaiaMap[text.sender_id]">
 							</template>
 							<template v-else>
