@@ -61,7 +61,7 @@ function handleJsonFile(e){
 function createBase64Stream(url, gala_id){
 	let stream = Rx.Observable.fromPromise(fetch(url))
 					.flatMap(function(response){
-						return Rx.Observable.fromPromise(response.body.getReader().reader());
+						return Rx.Observable.fromPromise(response.body.getReader().read());
 					})
 					.flatMap(function(result){
 						return Rx.Observable.fromPromise(btoa(String.fromCharCode.apply(null, result.value)));
