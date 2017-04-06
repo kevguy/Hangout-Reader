@@ -61,14 +61,14 @@ function handleJsonFile(e){
 function createBase64Stream(url, gala_id){
 	let stream = Rx.Observable.fromPromise(fetch(url))
 					.flatMap(function(response){
-						return Rx.Observable.fromPromise(response.body.getReader().read());
-					})
-					.flatMap(function(result){
-						return Rx.Observable.fromPromise(btoa(String.fromCharCode.apply(null, result.value)));
-					})
-					.flatMap(function(result){
-						gaiaIdToImg[gala_id] = result;
-						return Rx.Observable.of(result);
+						return Rx.Observable.fromPromise(response.body.getReader().read())
+									.flatMap(function(result){
+										return Rx.Observable.fromPromise(btoa(String.fromCharCode.apply(null, result.value)));
+									})
+									.flatMap(function(result){
+										gaiaIdToImg[gala_id] = result;
+										return Rx.Observable.of(result);
+									});
 					});
 	return stream;
 }
