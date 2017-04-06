@@ -67,7 +67,7 @@ function createBase64Stream(url, gala_id){
 						return Rx.Observable.fromPromise(response.body.getReader().read())
 									.flatMap(function(result){
 										let resultStr = btoa(String.fromCharCode.apply(null, result.value));
-										gaiaIdToImg[gala_id] = resultStr;
+										gaiaIdToImg[gala_id] = "data:image/jpg;base64, " + resultStr;
 										return Rx.Observable.of(resultStr);
 									});
 					});
