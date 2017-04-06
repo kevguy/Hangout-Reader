@@ -61,8 +61,20 @@ function handleJsonFile(e){
 		});
 */
 
+/*
+function createBase64Stream_fake(url, gala_id){
+	let stream = Rx.Observable.of("iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAMAAAAp4XiDAAAAA3NCSVQICAjb4U/gAAAAYFBMVEUxbd57nvdahueUtv9KeeeEqvdjku9Cdeelw/9CceeMsvdCcd5jju9Sgudzmu85cd57pvdaiu+cvv9KfeeErvdrlu+ly/85bd5aiueUuv9rku+lx/+Msv+EpvdSfeeMrvf2iXAnAAACTklEQVRIiZVUgY6kIAztTVxD6LqdE4/R9P//86AFKTiTrIDjBFte32spuNsDeL03k4u76cMr1D+/XStD/fP7eZdLIiNc7oR1H2XlhHKDi74+KMYcY8yvMS4TWHda3P4GgOl743df4bKz8jERESIRhCOar7pMwdQVNyCcZCLBdsWBTr88PVA2Tz/ZCXz/tealUyWFhFPCoSm7ErKJQRUbw/oRjLxQkOjPqPKYlygAssSTMMQhskv2QWlgEJC04OgCySh9tjxJUIHESRidAhjF7PSkNMQhP/jaorEXxfpI/SudHBRFkBTlkn0bKSlIQ4HBoGTfKPbQ83XlZ482LEXpVfcQyvH6oiH9a0M5YXZSa42M9ui6Kuuyr3XqXCC1zw4Y3GBwzX72Wl6oTJAejl3PxCh27jjHX/mypAefcagNvnCp+9H/pOFjdI2IzQuPJ7nV6e13brB+l5f6SsbCYowqz0v2c1ipOv325f3Bpcu87TB1h3mbFwB6pUmpy8zPIw5Y/d2PfgciNCP5Lc9okc6eLFvHIvaTmXqfNyu2zcsXEZ52dUi3gTlyF5iCxqf2LyoXRh/tNghzI9B68gpYOpGlIk751rTYTsXiP+krWsQVplybjL33eRGXHaWD5fIdhnacCwrzdwHB0OOUTrO0VDYUkSvUGznChNpnWudPgWV8ue/t/JPRtJwlV/PieFaB3oCodGxbn6ZlL1msBweylHBpqawo2iboA8hnLsEKZiRL+w/lYhRLKBN+gKGOS48i9oaF5fK4cuG5VEt/elPs5PIfdaS3gcUOUPIAAAAASUVORK5CYII=")
+						.flatMap(function(resultStr){
+							gaiaIdToImg[gala_id] = "data:image/jpg;base64, " + resultStr;
+							return Rx.Observable.of(resultStr);
+						});
+	return stream;
+}
+*/
+
+
 function createBase64Stream(url, gala_id){
-	let stream = Rx.Observable.fromPromise(fetch(url))
+	let stream = Rx.Observable.fromPromise(fetch(url, {mode: 'no-cors'}))
 					.flatMap(function(response){
 						return Rx.Observable.fromPromise(response.body.getReader().read())
 									.flatMap(function(result){
@@ -73,6 +85,7 @@ function createBase64Stream(url, gala_id){
 					});
 	return stream;
 }
+
 
 
 function createSingleFetchProfileImgStream(gala_id){
