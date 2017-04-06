@@ -2,6 +2,8 @@
 'use strict';
 
 var twemoji = require('twemoji');
+import $ from 'jQuery';
+import Rx from 'rxjs/Rx';
 
 let ALL_PARTICIPANTS = {};
 let CONVERSATION_LIST = [];
@@ -67,7 +69,7 @@ function getParticipantsAndConversationList(data){
 		list = list.substr(2);
 
 		return {
-			id: g_conversation_id, 
+			id: g_conversation_id,
 			participants,
 			list
 		};
@@ -102,7 +104,7 @@ function getConversations(data){
 				let chatMsg = event.chat_message;
 				let segments = chatMsg.message_content.segment;
 				let attachments = chatMsg.message_content.attachment;
-				
+
 				// Try and get messages
 				if (segments){
 					content.message = segments.reduce(function(acc, segment){
@@ -116,7 +118,7 @@ function getConversations(data){
 				if (attachments){
 					content.photo = attachments.map(function(attachment){
 						if (attachment.embed_item.type[0] === "PLUS_PHOTO"){
-							return { 
+							return {
 								url: attachment.embed_item['embeds.PlusPhoto.plus_photo'].url,
 								thumbnail: attachment.embed_item['embeds.PlusPhoto.plus_photo'].thumbnail.image_url
 							};
@@ -134,13 +136,13 @@ function getConversations(data){
 			} else if (event.event_type === 'HANGOUT_EVENT'){
 				if (event.hangout_event.media_type === 'AUDIO_ONLY'){
 					if (event.hangout_event.hangout_duration_secs){
-						content.message = 'Voice Call: ' + event.hangout_event.hangout_duration_secs + ' seconds';	
+						content.message = 'Voice Call: ' + event.hangout_event.hangout_duration_secs + ' seconds';
 					} else {
 						content.message = 'Failed voice call.';
 					}
 				} else if (event.hangout_event.media_type === 'AUDIO_VIDEO') {
 					if (event.hangout_event.hangout_duration_secs){
-						content.message = 'Video Call: ' + event.hangout_event.hangout_duration_secs + ' seconds';	
+						content.message = 'Video Call: ' + event.hangout_event.hangout_duration_secs + ' seconds';
 					} else {
 						content.message = 'Failed video call.';
 					}
@@ -156,7 +158,7 @@ function getConversations(data){
 				sender_id: sender,
 				sender_name,
 				timestamp,
-				msgtime, 
+				msgtime,
 				content
 			};
 
@@ -191,11 +193,11 @@ function handleFile(data){
 	// console.log(result.conversation_list);
 	// console.log(result.conversations);
 	// console.log(result.all_participants);
-	
+
 	let conversations = new Map();
 	CONVERSATIONS.map(function(item){
 		// console.log(item.conversation_id);
-		conversations.set(item.conversation_id, item.history);	
+		conversations.set(item.conversation_id, item.history);
 	});
 	// console.log(conversations.get('UgylVwHUsKjYT5sSElJ4AaABAQ'));
 
@@ -203,19 +205,54 @@ function handleFile(data){
 	// createVueStuff(CONVERSATION_LIST, conversations);
 	// vueInstance.conversation_list = CONVERSATION_LIST;
 	// GLOBAL_conversations = conversations;
-	// 
+	//
 	console.log(CONVERSATION_LIST);
 
 	return [CONVERSATION_LIST, conversations];
 }
 
+function createWindowScrollStream(element='.mdl-layout__content'){
+	let winHeight = $(window).height();
+	let scrollingStream = Rx.Observable.fromEvent($(element), 'scroll')
+				.map((se) => {
+					return {
+						scrollTop: se.target.scrollTop,
+						scrollHeight: se.target.scrollHeight,
+						clientHeight: se.target.clientHeight
+					};
+				})
+				.do(function(response){
+					console.log(response);
+				})
+				.filter((x) => x.scrollHeight === x.scrollTop + winHeight);
+	return scrollingStream;
+}
 
+function createScrollToBottomStream(element = '.mdl-layout__content'){
+	let stream = Rx.Observable.create(function(o){
+		$(element).scroll(function(se){
+			let scrollTop = se.target.scrollTop,
+					scrollHeight = se.target.scrollHeight,
+					clientHeight = se.target.clientHeight;
+
+			if ((scrollTop + clientHeight + 10) > scrollHeight){
+					console.log('scroll to bottom');
+					o.next({
+						message: 'scroll to bottom'
+					});
+			}
+		});
+	});
+	return stream;
+}
 
 
 
 
 let util = {
-	handleFile: handleFile	
+	handleFile,
+	createWindowScrollStream,
+	createScrollToBottomStream
 };
 
 

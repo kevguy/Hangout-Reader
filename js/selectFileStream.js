@@ -4,6 +4,7 @@
 
 import Rx from 'rxjs/Rx';
 import $ from 'jQuery';
+import { util } from './util';
 
 
 
@@ -43,7 +44,7 @@ let createSelectImageStream = function createSelectImageStream(elementId, vueIns
 	      timeout: 5000,
 	      actionHandler: function(event){
 	      	if (event){
-	      		snackbar.classList.remove('mdl-snackbar--active');	
+	      		snackbar.classList.remove('mdl-snackbar--active');
 	      	}
 	      },
 	      actionText: 'Close'
@@ -56,7 +57,7 @@ let createSelectImageStream = function createSelectImageStream(elementId, vueIns
 
 	function createSingleFetchProfileImgStream(gala_id){
 		let stream = Rx.Observable.fromPromise(
-			fetch('https://www.googleapis.com/plus/v1/people/' + gala_id + 
+			fetch('https://www.googleapis.com/plus/v1/people/' + gala_id +
 							'?key=AIzaSyD6SrPQUrQlVpmbC3qGR8lXwNorOW_jqH4')
 			)
 			.flatMap(function(response){
@@ -76,7 +77,7 @@ let createSelectImageStream = function createSelectImageStream(elementId, vueIns
 					// console.log(response);
 					return createSingleFetchProfileImgStream(gala_id).delay(1000);
 				}
-				// console.log(GLOBAL_OBJ.imageByGaiaIdMap);				
+				// console.log(GLOBAL_OBJ.imageByGaiaIdMap);
 			});
 		return stream;
 	}
@@ -85,7 +86,7 @@ let createSelectImageStream = function createSelectImageStream(elementId, vueIns
 
 
 
-	
+
 
 	function createFetchProfileImgsStream(){
 		let streams = [];
@@ -97,7 +98,7 @@ let createSelectImageStream = function createSelectImageStream(elementId, vueIns
 
 				if (!GLOBAL_OBJ.imageByGaiaIdMap.get(participant.name_id)){
 					// let stream = Rx.Observable.fromPromise(
-					// 	fetch('https://www.googleapis.com/plus/v1/people/' + participant.name_id + 
+					// 	fetch('https://www.googleapis.com/plus/v1/people/' + participant.name_id +
 					// 					'?key=AIzaSyD6SrPQUrQlVpmbC3qGR8lXwNorOW_jqH4'))
 					// 	.flatMap(function(response){
 					// 		return Rx.Observable.fromPromise(response.json());
@@ -110,7 +111,7 @@ let createSelectImageStream = function createSelectImageStream(elementId, vueIns
 
 					let stream = createSingleFetchProfileImgStream(participant.name_id);
 					streams.push(stream);
-				}	
+				}
 			});
 		});
 
@@ -126,9 +127,9 @@ let createSelectImageStream = function createSelectImageStream(elementId, vueIns
 //   }
 //   throw new Error('Network response was not ok.');
 // })
-// .then(function(myBlob) { 
-//   var objectURL = URL.createObjectURL(myBlob); 
-//   myImage.src = objectURL; 
+// .then(function(myBlob) {
+//   var objectURL = URL.createObjectURL(myBlob);
+//   myImage.src = objectURL;
 // })
 // .catch(function(error) {
 //   console.log('There has been a problem with your fetch operation: ' + error.message);
@@ -164,7 +165,7 @@ let createSelectImageStream = function createSelectImageStream(elementId, vueIns
 					};
 				});
 			}
-		} 
+		}
 		return Rx.Observable.just(0);
 	}
 
@@ -196,7 +197,7 @@ let createSelectImageStream = function createSelectImageStream(elementId, vueIns
 		.flatMap(function(response){
 			if (response){
 				return Rx.Observable.of(1);
-				// return createFetchProfileImgsStream();	
+				// return createFetchProfileImgsStream();
 			}
 		});
 
@@ -256,7 +257,7 @@ let createSelectImageStream = function createSelectImageStream(elementId, vueIns
 	})
 	.flatMap(function(response){
 		if (response){
-			return createFetchProfileImgsStream();	
+			return createFetchProfileImgsStream();
 		}
 	});
 	// .flatMap(function(response){
@@ -282,13 +283,15 @@ let createSelectImageStream = function createSelectImageStream(elementId, vueIns
 	// 					    .timeInterval();
 
 	let selectImageStream = Rx.Observable.merge(uploadBtnStream,
-										uploadStream, 
+										uploadStream,
 										dragenterStream,
 										dragleaveStream,
-										dragoverStream, 
-										dropStream);
+										dragoverStream,
+										dropStream,
+										// util.createWindowScrollStream());
+										util.createScrollToBottomStream());
 										//cancelStream);
-
+util.createWindowScrollStream();
 	return selectImageStream;
 };
 
