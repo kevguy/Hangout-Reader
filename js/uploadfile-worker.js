@@ -49,13 +49,16 @@ function handleJsonFile(e){
 
 
 /*
-	fetch(path).then(function (response) {
-	    response.body.getReader().read().then(function(result) {
-	        return btoa(String.fromCharCode.apply(null, result.value));
-	    }).then(function(b64) {
-	        console.log(b64);
-	    });
-	});
+	fetch(path)
+		.then(function (response) {
+		    response.body.getReader().read()
+		    .then(function(result) {
+		        return btoa(String.fromCharCode.apply(null, result.value));
+		    })
+		    .then(function(b64) {
+		        console.log(b64);
+		    });
+		});
 */
 
 function createBase64Stream(url, gala_id){
@@ -63,11 +66,9 @@ function createBase64Stream(url, gala_id){
 					.flatMap(function(response){
 						return Rx.Observable.fromPromise(response.body.getReader().read())
 									.flatMap(function(result){
-										return Rx.Observable.fromPromise(btoa(String.fromCharCode.apply(null, result.value)));
-									})
-									.flatMap(function(result){
-										gaiaIdToImg[gala_id] = result;
-										return Rx.Observable.of(result);
+										let resultStr = btoa(String.fromCharCode.apply(null, result.value));
+										gaiaIdToImg[gala_id] = resultStr;
+										return Rx.Observable.of(resultStr);
 									});
 					});
 	return stream;
