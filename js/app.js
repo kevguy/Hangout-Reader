@@ -3,6 +3,7 @@
 import {createSelectImageStream} from './selectFileStream';
 import Vue from 'Vue';
 import dialogPolyfill from 'dialogPolyfill';
+import $ from 'jQuery';
 // import Rx from 'rxjs/Rx';
 
 var Worker = require("worker!./uploadfile-worker");
@@ -62,6 +63,7 @@ function createVueStuff(worker){
 				settingEl.classList.remove("setting-not-visible");
 				let el = document.querySelector('.mdl-layout__obfuscator');
 				el.click();
+				this.scrollToSettings();
 			},
 			getProfileImgs(){
 				let self = this;
@@ -91,6 +93,17 @@ function createVueStuff(worker){
 					name_list
 				});
 
+			},
+			scrollToSettings(){
+				/* https://www.w3schools.com/jquery/tryit.asp?filename=tryjquery_eff_animate_smoothscroll */
+				console.log('scrollToSettings');
+				$('.mdl-layout__content').animate({
+					scrollTop: $('#settings-dialog').offset().top
+				}, 800, function(){
+
+				// Add hash (#) to URL when done scrolling (default click behavior)
+					// window.location.hash = hash;
+				});
 			}
 		}
 	});
