@@ -4,9 +4,10 @@ import {createSelectImageStream} from './selectFileStream';
 import Vue from 'Vue';
 import dialogPolyfill from 'dialogPolyfill';
 import $ from 'jQuery';
-// import Rx from 'rxjs/Rx';
+import Rx from 'rxjs/Rx';
 
 var Worker = require("worker!./uploadfile-worker");
+import { util } from './util';
 
 let GLOBAL_OBJ = {
 	conversations: [],
@@ -21,13 +22,16 @@ function createVueStuff(worker){
 		state: {
 			search_results: [],
 			conversation_list: [],
+			full_history: [],
 			history: [],
+			performance_mode: true,
 			chosen_conversation_id: 0,
 			enable_table_mode: false,
 			enable_show_person: true,
 			enable_show_time: true,
 			enable_show_msg: true,
-			profileImgByGaiaMap: {}
+			profileImgByGaiaMap: {},
+			scrollStreamSubscription: undefined
 		}
 	};
 
@@ -115,19 +119,66 @@ function createVueStuff(worker){
 				sharedState: this.$root.$data,
 				chosen_conversation_id: 0,
 				enable_table_mode: false,
+				performance_mode: true
 			};
 		},
 		watch: {
 		    sharedState: {
 	          deep: true,
 	          handler: function(){
+	          	console.log('handling');
 	          	if (this.$root.$data.chosen_conversation_id !== this.chosen_conversation_id){
 	          		this.chosen_conversation_id = this.$root.$data.chosen_conversation_id;
-	          		this.$root.$data.history = GLOBAL_OBJ.conversations.get(this.chosen_conversation_id);
+
+	          		this.$root.$data.full_history = GLOBAL_OBJ.conversations.get(this.chosen_conversation_id);
+
+	          		if (this.$root.$data.performance_mode === true){
+	          			console.log('performance mode enabled!');
+	          			if (this.$root.$data.scrollStreamSubscription){
+	          				this.$root.$data.scrollStreamSubscription.unsubscribe();
+	          			}
+	          			let self = this;
+	          			this.$root.$data.history = [];
+	          			this.$root.$data.scrollStreamSubscription = this.createScrollStream(this.$root.$data.full_history).subscribe(
+	          				function(response){
+	          					console.log('performance mode, getting something new');
+	          					self.$root.$data.history = self.$root.$data.history.concat(response);
+	          				});
+	          		} else {
+	          			console.log('performance mode disabled!');
+	          			this.$root.$data.history = this.$root.$data.full_history;
+	          		}
+	          		this.performance_mode = this.$root.$data.performance_mode;
 	          	}
+
+	          	if (this.performance_mode !== this.$root.$data.performance_mode){
+	          		if (this.$root.$data.performance_mode === true){
+	          			console.log('performance mode enabled!');
+	          			if (this.$root.$data.scrollStreamSubscription){
+	          				this.$root.$data.scrollStreamSubscription.unsubscribe();
+	          			}
+	          			let self = this;
+	          			this.$root.$data.history = [];
+	          			this.$root.$data.scrollStreamSubscription = this.createScrollStream(this.$root.$data.full_history).subscribe(
+	          				function(response){
+	          					console.log('performance mode, getting something new');
+	          					self.$root.$data.history = self.$root.$data.history.concat(response);
+	          				});
+	          		} else {
+	          			console.log('performance mode disabled!');
+	          			this.$root.$data.history = this.$root.$data.full_history;
+	          		}
+	          		this.performance_mode = this.$root.$data.performance_mode;
+	          	}
+
+	          	
+
+
 	          	if (this.$root.$data.enable_table_mode !== this.enable_table_mode){
 	          		this.enable_table_mode = this.$root.$data.enable_table_mode;
 	          	}
+
+
 	          }
         	},
 		},
@@ -142,6 +193,38 @@ function createVueStuff(worker){
 				}
 				console.log('bruh');
 				return '';
+			},
+			dissectArray(arr, chunkSize){
+				var result = [], i;
+				for (i = 0; i < arr.length; i += chunkSize){
+					result.push(arr.slice(i, i + chunkSize));
+				}
+				return result;
+			},
+			createScrollStream(arr){
+				let data = this.dissectArray(arr, 50);
+				let currentIndex = 0;
+
+				this.$root.$data.history = this.$root.$data.history.concat(data[currentIndex]);
+
+				console.log(data[currentIndex]);
+
+				let stream = util.createScrollToBottomStream()
+								.flatMap(function(){
+									console.log('createScrollStream');
+									currentIndex += 1;
+									if (currentIndex < data.length){
+										return Rx.Observable.of(data[currentIndex]);	
+									} else {
+										return Rx.Observable.of([]);
+									}
+								});
+				return stream;
+			},
+			updateHistory(newData){
+				if (this.$root.$data.performance_mode === true){
+					this.$root.$data.history.push(newData);
+				}
 			}
 		}
 	});
@@ -154,6 +237,12 @@ function createVueStuff(worker){
 	console.log('Vue is live!');
 	return testApp;
 }
+
+
+
+
+
+
 
 (function(document){
 	let worker = new Worker();
