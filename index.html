@@ -37,7 +37,8 @@
 				    for="demo-menu-lower-right">
 					<li class="mdl-menu__item" @click="openSettings()">Settings</li>
 				  <li disabled class="mdl-menu__item">Email Me</li>
-				  <li class="mdl-menu__item" @click="openDialog()">Help</li>
+				  <li class="mdl-menu__item" @click="openHelpDialog()">How To Use</li>
+					<li class="mdl-menu__item">Help</li>
 				</ul>
 			</div>
 
@@ -301,7 +302,8 @@
 	      <a class="mdl-navigation__link" href="javascript:void(0)" @click="openSettingsDialog()"><i class="material-icons">settings</i>Settings</a>
 	      <a class="mdl-navigation__link mdl-menu__item--full-bleed-divider" href=""></a>
 	      <a class="mdl-navigation__link" href="https://github.com/kevguy/Hangout-Reader"><i class="material-icons">code</i>Github</a>
-	      <a class="mdl-navigation__link" href=""><i class="material-icons">help</i>Help</a>
+	      <a class="mdl-navigation__link" href="javascript:void(0)" @click="$root.openHelpDialog()"><i class="material-icons">map</i>How To Use</a>
+					      <a class="mdl-navigation__link" href="https://github.com/kevguy/Hangout-Reader"><i class="material-icons">help</i>Help</a>
 	    </nav>
 	</template>
 
