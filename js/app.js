@@ -225,6 +225,7 @@ function createVueStuff(worker){
 										document.querySelector('.msg-loading').style.visibility = 'visible';
 										return Rx.Observable.of(data[currentIndex]);
 									} else {
+										document.querySelector('.msg-loading').style.visibility = 'hidden';
 										return Rx.Observable.of([]);
 									}
 								});
