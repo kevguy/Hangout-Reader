@@ -92,7 +92,7 @@
 					    <button class="mdl-button mdl-js-button mdl-button--primary upload-status upload-complete-not-visible" style="float:right;">
 						  Complete
 						</button>
-						<button id="show-modal-example" type="button" class="mdl-button mdl-button--raised">Show Modal</button>
+						<button id="show-modal-example" type="button" class="mdl-button mdl-button--raised" style="display">How To Use</button>
 
 					</div>
 				</div>
@@ -277,17 +277,43 @@
 			  <button class="mdl-snackbar__action" type="button"></button>
 			</div>
 
-			<dialog class="mdl-dialog" id="modal-example">
-			    <div class="mdl-dialog__content">
-			        <p>
-			            This is an example of the MDL Dialog being used as a modal.
-			            It is using the full width action design intended for use with buttons
-			            that do not fit within the specified <a href="https://www.google.com/design/spec/components/dialogs.html#dialogs-specs">length metrics</a>.
-			        </p>
+			<dialog class="mdl-dialog instruction-dialog" id="modal-example" style="width:400px">
+				<h3 class="mdl-dialog__title">How To Use:</h3>
+	    	<div class="mdl-dialog__content">
+					<ul class="demo-list-item mdl-list">
+						<li class="mdl-list__item">
+							<p>
+								Go to <a href="https://takeout.google.com/settings/takeout">Google Takeout</a> and follow the instructions to create an archive of your data.
+							</p>
+						</li>
+						<li class="mdl-list__item">
+							<p>
+								Only the Hangouts options is needed to selected here.
+							</p>
+						</li>
+						<li class="mdl-list__item">
+							<p>
+								After Step 1 and  2, you should have a zip file called "takeout-XXXXXXXXXX.zip"
+							</p>
+						</li>
+						<li class="mdl-list__item">
+							<p>
+								Extract the zip and find the "Hangout" folder inside the "Takeout" folder.
+							</p>
+						</li>
+						<li class="mdl-list__item">
+							<p>
+								Upload the "Hangouts.json" file and you're all set!
+							</p>
+						</li>
+					</ul>
+					<p>
+						Note: Hangout Reader only reads the file you upload and makes its content inside more presentable. It doesn't violate your privacy as nothing is uploaded or saved in any external server.
+					</p>
 			    </div>
 			    <div class="mdl-dialog__actions mdl-dialog__actions--full-width">
 			        <button type="button" class="mdl-button">Close</button>
-			        <button type="button" class="mdl-button" disabled>Inactive action</button>
+			        <button type="button" class="mdl-button" disabled>Email Me</button>
 			    </div>
 			</dialog>
 		</main>

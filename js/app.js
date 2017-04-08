@@ -60,8 +60,19 @@ function createVueStuff(worker){
 				let el = document.querySelector('.mdl-layout__obfuscator');
 				el.click();
 
+				this.scrollToTop();
+
 				this.getProfileImgs();
 
+			},
+			scrollToTop(){
+				$('.mdl-layout__content').animate({
+				  scrollTop: 0
+				}, 800, function(){
+
+				// Add hash (#) to URL when done scrolling (default click behavior)
+				  // window.location.hash = hash;
+				});
 			},
 			openSettingsDialog(){
 				let settingEl = document.querySelector('.setting-dialog');
