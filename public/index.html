@@ -17,13 +17,16 @@
 		<header class="mdl-layout__header">
 			<div class="mdl-layout__header-row">
 				<!-- Title -->
-				<span class="mdl-layout-title">Hangout Reader</span>
+				<span class="mdl-layout-title">Hangout Reader
+					<span class="conversation-info"></span>
+				</span>
 				<!-- Add spacer, to align navigation to the right -->
 				<div class="mdl-layout-spacer"></div>
+				<div class="mdl-layout-spacer msg-info">Showing {{history.length}} of {{full_history.length}} messages</div>
 				<!-- Navigation. We hide it in small screens. -->
 				<nav class="mdl-navigation mdl-layout--large-screen-only">
-					<a class="mdl-navigation__link" href="">Home</a>
-					<a class="mdl-navigation__link" href="">Github</a>
+					<a class="mdl-navigation__link" href="https://kevguy.github.io/Hangout-Reader/">Home</a>
+					<a class="mdl-navigation__link" href="https://github.com/kevguy/Hangout-Reader">Github</a>
 				</nav>
 				<button id="demo-menu-lower-right"
 				        class="mdl-button mdl-js-button mdl-button--icon">
@@ -32,10 +35,10 @@
 
 				<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
 				    for="demo-menu-lower-right">
-				  <li class="mdl-menu__item">Some Action</li>
-				  <li class="mdl-menu__item">Another Action</li>
+					<li class="mdl-menu__item" @click="openSettings()">Settings</li>
 				  <li disabled class="mdl-menu__item">Email Me</li>
-				  <li class="mdl-menu__item">Help</li>
+				  <li class="mdl-menu__item" @click="openHelpDialog()">How To Use</li>
+					<li class="mdl-menu__item">Help</li>
 				</ul>
 			</div>
 
@@ -293,13 +296,14 @@
 
 	<template id="menu-vue-component">
 		<nav class="mdl-navigation navigation-drawer">
-			<a class="mdl-navigation__link mdl-menu__item--full-bleed-divider" href="javascript:void(0)"><i class="material-icons">home</i>Home</a>
+			<a class="mdl-navigation__link mdl-menu__item--full-bleed-divider" href="https://kevguy.github.io/Hangout-Reader/"><i class="material-icons">home</i>Home</a>
 	      <a class="mdl-navigation__link" href="javascript:void(0)" v-for="conv_list in $root.$data.conversation_list" @click="switchConv(conv_list.id)">{{conv_list.list}}</a>
 	      <a class="mdl-navigation__link mdl-menu__item--full-bleed-divider" href=""></a>
 	      <a class="mdl-navigation__link" href="javascript:void(0)" @click="openSettingsDialog()"><i class="material-icons">settings</i>Settings</a>
 	      <a class="mdl-navigation__link mdl-menu__item--full-bleed-divider" href=""></a>
-	      <a class="mdl-navigation__link" href=""><i class="material-icons">code</i>Github</a>
-	      <a class="mdl-navigation__link" href=""><i class="material-icons">help</i>Help</a>
+	      <a class="mdl-navigation__link" href="https://github.com/kevguy/Hangout-Reader"><i class="material-icons">code</i>Github</a>
+	      <a class="mdl-navigation__link" href="javascript:void(0)" @click="$root.openHelpDialog()"><i class="material-icons">map</i>How To Use</a>
+					      <a class="mdl-navigation__link" href="https://github.com/kevguy/Hangout-Reader"><i class="material-icons">help</i>Help</a>
 	    </nav>
 	</template>
 

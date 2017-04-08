@@ -56,6 +56,7 @@ function createVueStuff(worker){
 		methods: {
 			switchConv(conv_id){
 				this.$root.$data.chosen_conversation_id = conv_id;
+				document.querySelector('.msg-info').style.visibility = 'visible';
 				let el = document.querySelector('.mdl-layout__obfuscator');
 				el.click();
 
@@ -128,6 +129,7 @@ function createVueStuff(worker){
 				console.log('detail component is ready');
 				console.log(document.querySelectorAll('.msg-loading'));
 				document.querySelector('.msg-loading').style.visibility = 'hidden';
+				document.querySelector('.msg-info').style.visibility = 'hidden';
     },
 		watch: {
 		    sharedState: {
@@ -246,6 +248,29 @@ function createVueStuff(worker){
 			created: function () {
 				// `this` points to the vm instance
 				console.log('Vue is live!');
+			},
+			methods: {
+				openSettings(){
+					let settingEl = document.querySelector('.setting-dialog');
+					settingEl.classList.remove("setting-not-visible");
+					this.scrollToSettings();
+				},
+				scrollToSettings(){
+					/* https://www.w3schools.com/jquery/tryit.asp?filename=tryjquery_eff_animate_smoothscroll */
+					console.log('scrollToSettings');
+					$('.mdl-layout__content').animate({
+						scrollTop: $('#settings-dialog').offset().top
+					}, 800, function(){
+
+					// Add hash (#) to URL when done scrolling (default click behavior)
+						// window.location.hash = hash;
+					});
+				},
+				openHelpDialog(){
+					console.log('openHelpDialog');
+					var dialog = document.querySelector('#modal-example');
+					dialog.showModal();
+				}
 			}
 	  });
 
