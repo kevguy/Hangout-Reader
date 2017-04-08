@@ -6,6 +6,7 @@
 	<link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.cyan-pink.min.css" />
 	<script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/dialog-polyfill/0.4.2/dialog-polyfill.min.js"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet" type="text/css" href="./public/assets/js/main.css">
 </head>
 <body>
@@ -336,6 +337,9 @@
 						</template>
 					</span>
 				</li>
+				<li style="text-align: center;" class="msg-loading">
+					<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
+				</li>
 			</ul>
 		</div>
 		<div v-else-if="enable_table_mode">
@@ -386,12 +390,15 @@
 					</template>
 				</tbody>
 			</table>
+			<div style="text-align: center;" class="msg-loading">
+				<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
+			</div>
 		</div>
 	</template>
 
 
 	<template id="settings-vue-component">
-		<div class="demo-card-wide mdl-card mdl-shadow--2dp file-dialog setting-dialog setting-not-visible">
+		<div id="settings-dialog" class="demo-card-wide mdl-card mdl-shadow--2dp file-dialog setting-dialog setting-not-visible">
 			<div class="mdl-card__title">
 				<h2 class="mdl-card__title-text">Settings</h2>
 			</div>
@@ -430,7 +437,7 @@
 					    </span>
 					    <span class="mdl-list__item-secondary-action">
 					      <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="performance-mode-switch">
-					        <input type="checkbox" id="performance-mode-switch" class="mdl-switch__input" />
+					        <input type="checkbox" id="performance-mode-switch" class="mdl-switch__input" v-model="$root.$data.performance_mode" />
 					      </label>
 					    </span>
 					  </li>

@@ -15,7 +15,7 @@ let GLOBAL_OBJ = {
 };
 
 function createVueStuff(worker){
-	
+
 	worker.postMessage({msg: 'dvsdv'});
 
 	let store = {
@@ -122,6 +122,13 @@ function createVueStuff(worker){
 				performance_mode: true
 			};
 		},
+		mounted:function(){
+        // code here executes once the component is rendered
+        // use this in the child component
+				console.log('detail component is ready');
+				console.log(document.querySelectorAll('.msg-loading'));
+				document.querySelector('.msg-loading').style.visibility = 'hidden';
+    },
 		watch: {
 		    sharedState: {
 	          deep: true,
@@ -171,7 +178,7 @@ function createVueStuff(worker){
 	          		this.performance_mode = this.$root.$data.performance_mode;
 	          	}
 
-	          	
+
 
 
 	          	if (this.$root.$data.enable_table_mode !== this.enable_table_mode){
@@ -212,9 +219,11 @@ function createVueStuff(worker){
 				let stream = util.createScrollToBottomStream()
 								.flatMap(function(){
 									console.log('createScrollStream');
+
 									currentIndex += 1;
 									if (currentIndex < data.length){
-										return Rx.Observable.of(data[currentIndex]);	
+										document.querySelector('.msg-loading').style.visibility = 'visible';
+										return Rx.Observable.of(data[currentIndex]);
 									} else {
 										return Rx.Observable.of([]);
 									}
@@ -224,6 +233,7 @@ function createVueStuff(worker){
 			updateHistory(newData){
 				if (this.$root.$data.performance_mode === true){
 					this.$root.$data.history.push(newData);
+					document.querySelector('.msg-loading').style.visibility = 'hidden';
 				}
 			}
 		}
@@ -231,10 +241,14 @@ function createVueStuff(worker){
 
 	let testApp = new Vue({
 	    el: '#app',
-	    data: store.state
+	    data: store.state,
+			created: function () {
+				// `this` points to the vm instance
+				console.log('Vue is live!');
+			}
 	  });
 
-	console.log('Vue is live!');
+
 	return testApp;
 }
 
@@ -249,7 +263,7 @@ function createVueStuff(worker){
 
 	let vueInstance = createVueStuff(worker);
 
-	/* these are for showing the sample dialog */ 
+	/* these are for showing the sample dialog */
 	var dialog = document.querySelector('#modal-example');
 	var closeButton = dialog.querySelector('button');
 	var showButton = document.querySelector('#show-modal-example');
@@ -258,8 +272,8 @@ function createVueStuff(worker){
 	}
 	var closeClickHandler = function(event) {
 		if (event){
-			dialog.close();	
-		}	    
+			dialog.close();
+		}
 	};
 	var showClickHandler = function(event) {
 		if (event){
@@ -277,6 +291,6 @@ function createVueStuff(worker){
 		}
 	);
 
-	
+
 
 })(document);
