@@ -83,8 +83,8 @@ function createVueStuff(worker){
 			},
 			getProfileImgs(){
 				let self = this;
-				console.log(this.$root.$data.chosen_conversation_id);
-				console.log(this.$root.$data.conversation_list[this.$root.$data.chosen_conversation_id]);
+				// console.log(this.$root.$data.chosen_conversation_id);
+				// console.log(this.$root.$data.conversation_list[this.$root.$data.chosen_conversation_id]);
 				let name_list = this.$root.$data.conversation_list
 								.filter(function(conversation){
 									return conversation.id === self.$root.$data.chosen_conversation_id;
@@ -92,14 +92,12 @@ function createVueStuff(worker){
 								.participants.map(function(participant){
 									return participant.name_id;
 								});
-				console.log(name_list);
+				// console.log(name_list);
 
 				worker.onMessage = function(e){
-					console.log(e.data);
 					if (e.data.action === 'getProfileImgs' && e.data.name_list){
-						console.log('got name list from worker');
+						// console.log('got name list from worker');
 						this.$root.$data.profileImgByGaiaMap = e.data.name_list;
-						console.log(this.$root.$data.profileImgByGaiaMap);
 					}
 				};
 
@@ -112,7 +110,6 @@ function createVueStuff(worker){
 			},
 			scrollToSettings(){
 				/* https://www.w3schools.com/jquery/tryit.asp?filename=tryjquery_eff_animate_smoothscroll */
-				console.log('scrollToSettings');
 				$('.mdl-layout__content').animate({
 					scrollTop: $('#settings-dialog').offset().top
 				}, 800, function(){
@@ -137,8 +134,6 @@ function createVueStuff(worker){
 		mounted:function(){
         // code here executes once the component is rendered
         // use this in the child component
-				console.log('detail component is ready');
-				console.log(document.querySelectorAll('.msg-loading'));
 				document.querySelector('.msg-loading').style.visibility = 'hidden';
 				document.querySelector('.msg-info').style.visibility = 'hidden';
     },
@@ -146,14 +141,12 @@ function createVueStuff(worker){
 		    sharedState: {
 	          deep: true,
 	          handler: function(){
-	          	console.log('handling');
 	          	if (this.$root.$data.chosen_conversation_id !== this.chosen_conversation_id){
 	          		this.chosen_conversation_id = this.$root.$data.chosen_conversation_id;
 
 	          		this.$root.$data.full_history = GLOBAL_OBJ.conversations.get(this.chosen_conversation_id);
 
 	          		if (this.$root.$data.performance_mode === true){
-	          			console.log('performance mode enabled!');
 	          			if (this.$root.$data.scrollStreamSubscription){
 	          				this.$root.$data.scrollStreamSubscription.unsubscribe();
 	          			}
@@ -161,11 +154,9 @@ function createVueStuff(worker){
 	          			this.$root.$data.history = [];
 	          			this.$root.$data.scrollStreamSubscription = this.createScrollStream(this.$root.$data.full_history).subscribe(
 	          				function(response){
-	          					console.log('performance mode, getting something new');
 	          					self.$root.$data.history = self.$root.$data.history.concat(response);
 	          				});
 	          		} else {
-	          			console.log('performance mode disabled!');
 	          			this.$root.$data.history = this.$root.$data.full_history;
 	          		}
 	          		this.performance_mode = this.$root.$data.performance_mode;
@@ -173,7 +164,6 @@ function createVueStuff(worker){
 
 	          	if (this.performance_mode !== this.$root.$data.performance_mode){
 	          		if (this.$root.$data.performance_mode === true){
-	          			console.log('performance mode enabled!');
 	          			if (this.$root.$data.scrollStreamSubscription){
 	          				this.$root.$data.scrollStreamSubscription.unsubscribe();
 	          			}
@@ -181,11 +171,9 @@ function createVueStuff(worker){
 	          			this.$root.$data.history = [];
 	          			this.$root.$data.scrollStreamSubscription = this.createScrollStream(this.$root.$data.full_history).subscribe(
 	          				function(response){
-	          					console.log('performance mode, getting something new');
 	          					self.$root.$data.history = self.$root.$data.history.concat(response);
 	          				});
 	          		} else {
-	          			console.log('performance mode disabled!');
 	          			this.$root.$data.history = this.$root.$data.full_history;
 	          		}
 	          		this.performance_mode = this.$root.$data.performance_mode;
@@ -205,13 +193,11 @@ function createVueStuff(worker){
 		methods: {
 			getImageUrl(senderId){
 				let url = GLOBAL_OBJ.imageByGaiaIdMap.get(senderId);
-				console.log(senderId);
-				console.log(GLOBAL_OBJ.imageByGaiaIdMap);
+				// console.log(senderId);
+				// console.log(GLOBAL_OBJ.imageByGaiaIdMap);
 				if (url){
-					console.log(url);
 					return url;
 				}
-				console.log('bruh');
 				return '';
 			},
 			dissectArray(arr, chunkSize){
@@ -227,11 +213,8 @@ function createVueStuff(worker){
 
 				this.$root.$data.history = this.$root.$data.history.concat(data[currentIndex]);
 
-				console.log(data[currentIndex]);
-
 				let stream = util.createScrollToBottomStream()
 								.flatMap(function(){
-									console.log('createScrollStream');
 
 									currentIndex += 1;
 									if (currentIndex < data.length){
@@ -268,7 +251,6 @@ function createVueStuff(worker){
 				},
 				scrollToSettings(){
 					/* https://www.w3schools.com/jquery/tryit.asp?filename=tryjquery_eff_animate_smoothscroll */
-					console.log('scrollToSettings');
 					$('.mdl-layout__content').animate({
 						scrollTop: $('#settings-dialog').offset().top
 					}, 800, function(){
@@ -278,7 +260,6 @@ function createVueStuff(worker){
 					});
 				},
 				openHelpDialog(){
-					console.log('openHelpDialog');
 					var dialog = document.querySelector('#modal-example');
 					dialog.showModal();
 				}

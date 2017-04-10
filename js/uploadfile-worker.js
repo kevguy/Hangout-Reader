@@ -25,7 +25,6 @@ function handleJsonFile(e){
 
 			console.log("Loaded: " + evt.target.result.length);
 			// observer.next(evt.target.result);
-			console.log(util);
 			let result = util.handleFile(evt.target.result);
 
 			// createVueStuff(CONVERSATION_LIST, conversations);
@@ -90,7 +89,7 @@ function createBase64Stream(url, gala_id){
 
 function createSingleFetchProfileImgStream(gala_id){
 	let stream = Rx.Observable.fromPromise(
-		fetch('https://www.googleapis.com/plus/v1/people/' + gala_id + 
+		fetch('https://www.googleapis.com/plus/v1/people/' + gala_id +
 						'?key=AIzaSyD6SrPQUrQlVpmbC3qGR8lXwNorOW_jqH4')
 		)
 		.flatMap(function(response){
@@ -113,12 +112,12 @@ function createSingleFetchProfileImgStream(gala_id){
 				// console.log(response);
 				return createSingleFetchProfileImgStream(gala_id).delay(5000);
 			}
-			// console.log(GLOBAL_OBJ.imageByGaiaIdMap);				
+			// console.log(GLOBAL_OBJ.imageByGaiaIdMap);
 		})
 		.flatMap(function(result){
 			return createBase64Stream(result.response.image.url, result.gala_id);
 		});
-		
+
 	return stream;
 }
 

@@ -58,11 +58,10 @@ let createSelectImageStream = function createSelectImageStream(elementId, vueIns
 			})
 			.flatMap(function(response){
 				if (!response.error){
-					console.log(response);
-					console.log(response.image.url);
-					console.log(response['displayName']);
+					// console.log(response);
+					// console.log(response.image.url);
+					// console.log(response['displayName']);
 					if (response.image){
-						console.log('lets do this');
 						GLOBAL_OBJ.imageByGaiaIdMap.set(gala_id, response.image.url);
 						return Rx.Observable.of(response);
 					}
@@ -151,9 +150,9 @@ let createSelectImageStream = function createSelectImageStream(elementId, vueIns
 						}
 
 						if (e.data.action === 'getProfileImgs' && e.data.name_list){
-							console.log('got name list from worker');
+							// console.log('got name list from worker');
 							vueInstance.profileImgByGaiaMap = e.data.name_list;
-							console.log(vueInstance.profileImgByGaiaMap);
+							// console.log(vueInstance.profileImgByGaiaMap);
 						}
 					};
 				});
