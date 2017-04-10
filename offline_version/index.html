@@ -62,7 +62,7 @@
 		}
 		.image-grid {
 			position:absolute;
-			width: 100%; 
+			width: 100%;
 			height: 150px;
 			line-height: 150px;
 			border: 5px dashed black;
@@ -93,7 +93,7 @@
 			display: flex;
 			flex-flow: row wrap;
 			align-items: stretch;
-			
+
 			width: 100%;
 		}
 
@@ -142,7 +142,7 @@
 			display: flex;
 			flex-flow: row wrap;
 			align-items: stretch;
-			
+
 			width: 100%;
 		}
 
@@ -210,8 +210,8 @@
 			opacity:0;
 		}
 
-		
-		
+
+
 	</style>
 </head>
 <body>
@@ -256,7 +256,7 @@
 					<div class="mdl-card__title">
 						<h2 class="mdl-card__title-text">Welcome</h2>
 					</div>
-					<div class="mdl-card__supporting-text">	
+					<div class="mdl-card__supporting-text">
 						Upload the Hangouts.json file here:
 					</div>
 					<div class="mdl-card__actions mdl-card--border file-container" id="app-logo-container">
@@ -283,10 +283,10 @@
 									<p class="kev-drop-msg" style="vertical-align:middle">Drop JSON file here</p>
 								</div>
 								<div class="kev-img-container image-grid" style="z-index:1;">
-									<img class="kev-preview image-resize"></img>	
-								</div>	
+									<img class="kev-preview image-resize"></img>
+								</div>
 							</div>
-							
+
 						</div>
 					</div>
 					<div class="mdl-card__actions mdl-card--border">
@@ -301,7 +301,7 @@
 
 				<settings-vue></settings-vue>
 
-				
+
 
 				<detail-vue></detail-vue>
 
@@ -310,7 +310,7 @@
 						<div class="mdl-card__title">
 							<h2 class="mdl-card__title-text">Welcome</h2>
 						</div>
-						<div class="mdl-card__supporting-text">	
+						<div class="mdl-card__supporting-text">
 							Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 							Mauris sagittis pellentesque lacus eleifend lacinia...
 						</div>
@@ -523,7 +523,7 @@
 					  </template>
 					</div>
 				    </span>
-				    
+
 				  </li>
 			</ul>
 		</div>
@@ -537,18 +537,18 @@
 					</tr>
 				</thead>
 				<tbody>
-									
+
 					<!-- <tr>
 						<td>$2.90</td>
 						<td class="mdl-data-table__cell--non-numeric" >Kevin Lai</td>
 						<td style="max-width=300px;">Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)Acrylic (Transparent)</td>
-						
+
 					</tr>
 					<tr>
 						<td>$1.25</td>
 						<td class="mdl-data-table__cell--non-numeric">Plywood (Birch)</td>
 						<td style="max-width=300px;">50</td>
-						
+
 					</tr>
 					<tr>
 						<td>$2.35</td>
@@ -556,7 +556,7 @@
 						<td style="max-width=300px;">10</td>
 					</tr> -->
 					<template v-for="text in $root.$data.history">
-						
+
 						<template v-if="text.content.message">
 							<tr>
 							<td>{{text.msgtime}}</td>
@@ -571,11 +571,11 @@
 				      		<td style="max-width=300px;"><img v-bind:src="text.content.photo.url" style="max-width:300px;max-height:300px"></td>
 				      		</tr>
 						</template>
-					</template>	
+					</template>
 				</tbody>
 			</table>
 		</div>
-		
+
 	</template>
 
 
@@ -584,7 +584,7 @@
 			<div class="mdl-card__title">
 				<h2 class="mdl-card__title-text">Settings</h2>
 			</div>
-			<div class="mdl-card__supporting-text">	
+			<div class="mdl-card__supporting-text">
 				Apply settings here:
 			</div>
 			<div class="mdl-card__actions mdl-card--border settings-container">
@@ -670,12 +670,12 @@
 			</div>
 		</div>
 	</template>
-	
+
 	<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
 	<script src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js'></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/5.0.1/Rx.js"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.2.6/vue.js"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twemoji/1.2.1/twemoji.min.js"></script>
-	<script src="./stupid2.js"></script>
+	<script src="./app.js"></script>
 </body>
 </html>
