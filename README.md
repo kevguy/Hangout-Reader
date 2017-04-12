@@ -11,12 +11,14 @@ Note: Hangout Reader only reads the file you upload and makes its content inside
 - [How To Use](https://github.com/kevguy/Hangout-Reader#how-to-use)
 - [Can I use it locally](https://github.com/kevguy/Hangout-Reader#can-i-use-it-locally)
   - [Method 1](https://github.com/kevguy/Hangout-Reader#method-1)
-  - [Method 2](https://github.com/kevguy/Hangout-Reader#method-2-recommended)
+  - [Method 2 (Recommended)](https://github.com/kevguy/Hangout-Reader#method-2-recommended)
 
 ## Features
-- You can
-- Offers a table mode if you want to view message history in a neat and tidy way, convenient for
-- Different settings
+- Everything is done offline (except when showing user profile pictures and photos with the URLs in `Hangouts.json`)
+- No matter how large your `Hangouts.json` is, it can still process it really fast. (4 seconds to parse a 65mb file, for instance)
+- User friendly and easy to run on your computer, if you are really worried about `Hangout Reader` keeping your data or sharing it to someone/something else, which I assure you it doesn't.
+- Offers a table mode if you want to view message history in a neat and tidy way.
+- Flexible configuration.
 
 
 ## How to use
