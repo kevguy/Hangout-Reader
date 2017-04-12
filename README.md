@@ -11,7 +11,7 @@ Note: Hangout Reader only reads the file you upload and makes its content inside
 - [How To Use](https://github.com/kevguy/Hangout-Reader#how-to-use)
 - [Can I use it locally](https://github.com/kevguy/Hangout-Reader#can-i-use-it-locally)
   - [Method 1](https://github.com/kevguy/Hangout-Reader#method-1)
-  - [Method 2](https://github.com/kevguy/Hangout-Reader#method-2)
+  - [Method 2](https://github.com/kevguy/Hangout-Reader#method-2-recommended)
 
 ## Features
 - You can
@@ -28,13 +28,11 @@ Note: Hangout Reader only reads the file you upload and makes its content inside
 Yes, but you may experience issues getting the profile images of everyone because CORS request failure. Overall, the behavior is 90% the same.
 
 ### Method 1
-For Firefox & Safari users, just directly open `index.html`.
+If you open `index.html` directly, Chrome and Firefox 1 will lead to a [security error](http://stackoverflow.com/questions/37718656/why-does-not-chrome-allow-web-workers-to-be-run-in-javascript) because Hangout Reader has a web worker.
 
-### Method 2
-This method is for Chrome users and developers aka computer nerds.
+If you don't want to follow along the long instructions below in method 2, you can directly open the `index.html` in the folder `offline_version` instead, it has far few features and can be very slow, but it spares you the trouble of installing this and that, stuff that only computer nerd enjoys.
 
-For Chrome users, method 1 will lead to a [security error](http://stackoverflow.com/questions/37718656/why-does-not-chrome-allow-web-workers-to-be-run-in-javascript) because Hangout Reader has a web worker.
-
+### Method 2 (Recommended)
 * Make sure you have [npm](https://nodejs.org/en/download/) installed on your computer.
 
 * Make sure you have webpack and webpack-dev-server installed globally (I'm still using Webpack 1). If not, run these commands on terminal(Linux/Mac) or command prompt (Windows).
