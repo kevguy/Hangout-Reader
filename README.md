@@ -1,7 +1,10 @@
 # Hangouts Reader
 While Google does allow you to backup your message history on Hangout, the backup file (Hangouts.json) is close to impossible for anyone to read, Hangouts Reader parses it and makes everything more presentable so you can still your message history anytime offline.
 
+<span style="color:red;font-weight:800;font-size:20px">
 Note: Hangout Reader only reads the file you upload and makes its content inside more presentable. It doesn't violate your privacy as nothing is uploaded or saved in any external server.
+</span>
+
 
 
 [Try it here!](https://kevguy.github.io/Hangout-Reader/)
