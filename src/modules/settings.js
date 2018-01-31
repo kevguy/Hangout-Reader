@@ -8,10 +8,14 @@ export default {
     showPicture: true,
     showMsg: true,
     showTime: true,
+    showDialog: false,
   },
   mutations: {
     updateMode(state, mode) {
       state.mode = mode;
+    },
+    showSettingsDialog(state, val) {
+      state.showDialog = val;
     },
   },
 };

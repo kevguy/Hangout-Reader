@@ -22,7 +22,7 @@
 
       <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
           for="demo-menu-lower-right">
-        <li class="mdl-menu__item">Settings</li>
+        <li class="mdl-menu__item" @click="showSettingsDialog(true)">Settings</li>
         <li disabled class="mdl-menu__item">Email Me</li>
         <li class="mdl-menu__item">How To Use</li>
         <li class="mdl-menu__item">Help</li>
@@ -33,8 +33,15 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex';
+
 export default {
   name: 'nav-header',
+  methods: {
+    ...mapMutations([
+      'showSettingsDialog',
+    ]),
+  },
 };
 </script>
 

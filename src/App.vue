@@ -14,15 +14,17 @@
         <router-view/>
       </div>
     </main>
+    <SettingsDialog></SettingsDialog>
   </div>
 </template>
 
 <script>
 import drawer from '@/components/Drawer.vue';
 import NavHeader from '@/components/Header.vue';
+import SettingsDialog from '@/components/UI/SettingsDialog.vue';
 
 export default {
-  components: { drawer, NavHeader },
+  components: { drawer, NavHeader, SettingsDialog },
 };
 </script>
 
