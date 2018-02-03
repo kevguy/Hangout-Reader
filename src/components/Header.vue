@@ -24,6 +24,7 @@
           for="demo-menu-lower-right">
         <li class="mdl-menu__item" @click="showSettingsDialog(true)">Settings</li>
         <li disabled class="mdl-menu__item">Email Me</li>
+        <li class="mdl-menu__item" @click="exportCSV()">Export To CSV</li>
         <li class="mdl-menu__item">How To Use</li>
         <li class="mdl-menu__item">Help</li>
       </ul>
@@ -41,6 +42,9 @@ export default {
     ...mapMutations([
       'showSettingsDialog',
     ]),
+    exportCSV() {
+      this.$store.dispatch('EXPORT_TO_CSV');
+    },
   },
 };
 </script>

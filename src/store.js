@@ -13,14 +13,30 @@ import { Observable } from 'rxjs/Rx';
 
 // https://stackoverflow.com/questions/43307377/use-worker-loader-with-vue-cli-and-webpack
 import Worker from 'worker-loader?name=workers/[hash:7].worker.js!./web-workers/uploadWorker';
+import CSVWorker from 'worker-loader?name=workers/[hash:7].worker.js!./web-workers/exportCSVWorker';
+
+import downloadCSV from './utils/downloadCSV';
 
 const worker = new Worker();
+const csvWorker = new CSVWorker();
 
 function handleJsonFileStream() {
   return Observable.create((observer) => {
     worker.onmessage = (e) => {
       console.info(e);
       if (e.data.action === 'HANDLE_JSON_FILE') {
+        observer.next({ data: e.data.payload });
+        observer.complete();
+      }
+    };
+  });
+}
+
+function handleCsvFileStream() {
+  return Observable.create((observer) => {
+    csvWorker.onmessage = (e) => {
+      console.info(e);
+      if (e.data.action === 'EXPORT_TO_CSV') {
         observer.next({ data: e.data.payload });
         observer.complete();
       }
@@ -71,5 +87,17 @@ export default new Vuex.Store({
         });
     },
     // UPDATE_CHAT_HISTORY({ commit }, )
+    EXPORT_TO_CSV() {
+      csvWorker.postMessage({
+        action: 'EXPORT_TO_CSV',
+        content: this.state.chatHistory.history,
+      });
+      console.log('Exporting to CSV');
+      return handleCsvFileStream().toPromise()
+        .then((res) => {
+          // console.log(`res.data: ${res.data.csv}`);
+          downloadCSV(res.data.csv);
+        });
+    },
   },
 });
