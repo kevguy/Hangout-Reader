@@ -180,31 +180,6 @@ $url_0: url(https://lh3.googleusercontent.com/-vqNxyIZxl-8/WNTMdSC7kqI/AAAAAAAAQ
   width: 80%;
   float: left;
 }
-.settings-container {
-  display: flex;
-  flex-flow: row wrap;
-  align-items: stretch;
-  width: 100%;
-}
-.settings-column {
-  flex: 1 auto;
-  width: 50%;
-  min-width: 250px;
-}
-.setting-dialog {
-  visibility: visible;
-  opacity: 1;
-  //  @include transition($transition-1,
-  // $transition-2, $transition-3, $transition-4, $transition-5, $transition-6,
-  // $transition-7, $transition-8, $transition-9, $transition-10)
-  transition: visibility 0s linear 0.5s,opacity 0.5s linear;
-  &.setting-not-visible {
-    display: none;
-    visibility: hidden;
-    height: 0;
-    opacity: 0;
-  }
-}
 .upload-dialog {
   visibility: visible;
   opacity: 1;
