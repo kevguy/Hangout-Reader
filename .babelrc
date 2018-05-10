@@ -1,0 +1,22 @@
+{
+  "presets": [
+    "es2017"
+  ],
+  "plugins": [
+    "syntax-dynamic-import",
+    "transform-object-rest-spread"
+  ],
+  "env": {
+    "test": {
+      "presets":[
+        ["es2015", { "modules": false }],
+        "react",
+        "stage-0"
+      ],
+      "plugins": [
+        "transform-es2015-modules-commonjs",
+        "dynamic-import-node"
+      ]
+    }
+  }
+}
