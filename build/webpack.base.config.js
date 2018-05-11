@@ -34,6 +34,11 @@ module.exports = {
         exclude: /node_modules/
       },
       {
+        test: /\.Worker\.js$/,
+        loader: 'worker-loader',
+        exclude: /node_modules/
+      },
+      {
         test: /\.(png|jpg|gif|svg)$/,
         loader: 'url-loader',
         options: {

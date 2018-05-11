@@ -41,99 +41,12 @@
             alt="Text label">
         </div>
         <div class="mdc-image-list__supporting">
+          <span class="mdc-image-list__label">{{conversation.groupName}}</span>
+        </div>
+        <!-- <div class="mdc-image-list__supporting">
           <span class="mdc-image-list__label">{{conversation.list}}</span>
-        </div>
+        </div> -->
       </li>
-
-      <!-- <li class="mdc-image-list__item">
-        <img class="mdc-image-list__image" src="https://material-components.github.io/material-components-web-catalog/static/media/photos/3x2/16.jpg" alt="Text label">
-        <div class="mdc-image-list__supporting">
-          <span class="mdc-image-list__label">Text label</span>
-        </div>
-      </li>
-      <li class="mdc-image-list__item">
-        <img class="mdc-image-list__image" src="https://material-components.github.io/material-components-web-catalog/static/media/photos/2x3/1.jpg" alt="Text label">
-        <div class="mdc-image-list__supporting">
-          <span class="mdc-image-list__label">Text label</span>
-        </div>
-      </li>
-      <li class="mdc-image-list__item">
-        <img class="mdc-image-list__image" src="https://material-components.github.io/material-components-web-catalog/static/media/photos/3x2/1.jpg" alt="Text label">
-        <div class="mdc-image-list__supporting"><span class="mdc-image-list__label">Text label</span>
-        </div>
-      </li>
-      <li class="mdc-image-list__item">
-        <img class="mdc-image-list__image" src="https://material-components.github.io/material-components-web-catalog/static/media/photos/2x3/2.jpg" alt="Text label">
-        <div class="mdc-image-list__supporting">
-          <span class="mdc-image-list__label">Text label</span>
-        </div>
-      </li>
-      <li class="mdc-image-list__item">
-        <img class="mdc-image-list__image" src="https://material-components.github.io/material-components-web-catalog/static/media/photos/2x3/3.jpg" alt="Text label">
-        <div class="mdc-image-list__supporting">
-          <span class="mdc-image-list__label">Text label</span>
-        </div>
-      </li>
-      <li class="mdc-image-list__item">
-        <img class="mdc-image-list__image" src="https://material-components.github.io/material-components-web-catalog/static/media/photos/3x2/2.jpg" alt="Text label">
-        <div class="mdc-image-list__supporting">
-          <span class="mdc-image-list__label">Text label</span>
-        </div>
-      </li>
-      <li class="mdc-image-list__item">
-        <img class="mdc-image-list__image" src="https://material-components.github.io/material-components-web-catalog/static/media/photos/2x3/4.jpg" alt="Text label">
-        <div class="mdc-image-list__supporting">
-          <span class="mdc-image-list__label">Text label</span>
-        </div>
-      </li>
-      <li class="mdc-image-list__item">
-        <img class="mdc-image-list__image" src="https://material-components.github.io/material-components-web-catalog/static/media/photos/3x2/3.jpg" alt="Text label">
-        <div class="mdc-image-list__supporting">
-          <span class="mdc-image-list__label">Text label</span>
-        </div>
-      </li>
-      <li class="mdc-image-list__item">
-        <img class="mdc-image-list__image" src="https://material-components.github.io/material-components-web-catalog/static/media/photos/2x3/5.jpg" alt="Text label">
-        <div class="mdc-image-list__supporting">
-          <span class="mdc-image-list__label">Text label</span>
-        </div>
-      </li>
-      <li class="mdc-image-list__item">
-        <img class="mdc-image-list__image" src="https://material-components.github.io/material-components-web-catalog/static/media/photos/3x2/4.jpg" alt="Text label">
-        <div class="mdc-image-list__supporting">
-          <span class="mdc-image-list__label">Text label</span>
-        </div>
-      </li>
-      <li class="mdc-image-list__item">
-        <img class="mdc-image-list__image" src="https://material-components.github.io/material-components-web-catalog/static/media/photos/2x3/6.jpg" alt="Text label">
-        <div class="mdc-image-list__supporting">
-          <span class="mdc-image-list__label">Text label</span>
-        </div>
-      </li>
-      <li class="mdc-image-list__item">
-        <img class="mdc-image-list__image" src="https://material-components.github.io/material-components-web-catalog/static/media/photos/3x2/5.jpg" alt="Text label">
-        <div class="mdc-image-list__supporting">
-          <span class="mdc-image-list__label">Text label</span>
-        </div>
-      </li>
-      <li class="mdc-image-list__item">
-        <img class="mdc-image-list__image" src="https://material-components.github.io/material-components-web-catalog/static/media/photos/2x3/7.jpg" alt="Text label">
-        <div class="mdc-image-list__supporting">
-          <span class="mdc-image-list__label">Text label</span>
-        </div>
-      </li>
-      <li class="mdc-image-list__item">
-        <img class="mdc-image-list__image" src="https://material-components.github.io/material-components-web-catalog/static/media/photos/3x2/6.jpg" alt="Text label">
-        <div class="mdc-image-list__supporting">
-          <span class="mdc-image-list__label">Text label</span>
-        </div>
-      </li>
-      <li class="mdc-image-list__item">
-        <img class="mdc-image-list__image" src="https://material-components.github.io/material-components-web-catalog/static/media/photos/3x2/7.jpg" alt="Text label">
-        <div class="mdc-image-list__supporting">
-          <span class="mdc-image-list__label">Text label</span>
-        </div>
-      </li> -->
     </ul>
   </div>
 </template>
@@ -151,7 +64,6 @@ export default {
   components: { ProgressBar },
   data() {
     return {
-      conversationList: [{"type":"individual","id":"UgxxAipDUpzt8MlH8F14AaABAQ","participants":[{"gaiaId":"106539800337908949517","name":"Jacob Lee"},{"gaiaId":"116725099929439898086","name":"Kevin Lai"}],"list":"Jacob Lee","user":"116725099929439898086"},{"type":"individual","id":"UgzPRlQPTuCzAElfTfZ4AaABAQ","participants":[{"gaiaId":"110606042492529723331"},{"gaiaId":"116725099929439898086","name":"Kevin Lai"}],"list":"undefined","user":"116725099929439898086"},{"type":"group","groupName":"Unknown Group","id":"Ugy6RkCTigIqiudMsN54AaABAQ","participants":[{"gaiaId":"117120341677250983418","name":"Adrienne Chum"},{"gaiaId":"116725099929439898086","name":"Kevin Lai"},{"gaiaId":"116201925507770432645","name":"john huen"}],"list":"Adrienne Chum, john huen","user":"116725099929439898086"},{"type":"individual","id":"UgwXiq6TYHIIsqx_Sjt4AaABAQ","participants":[{"gaiaId":"117120341677250983418","name":"Adrienne Chum"},{"gaiaId":"116725099929439898086","name":"kevilai13579@gmail.com"}],"list":"Adrienne Chum","user":"116725099929439898086"},{"type":"individual","id":"UgyUQL7LrLhY5s1DBg54AaABAQ","participants":[{"gaiaId":"116725099929439898086","name":"kevilai13579@gmail.com"},{"gaiaId":"116201925507770432645","name":"john huen"}],"list":"john huen","user":"116725099929439898086"},{"type":"group","groupName":"Unknown Group","id":"Ugz86jtyRMcmO50ZieJ4AaABAQ","participants":[{"gaiaId":"117120341677250983418"},{"gaiaId":"116725099929439898086","name":"Kevin Lai"},{"gaiaId":"116201925507770432645"}],"list":"undefined, undefined","user":"116725099929439898086"},{"type":"individual","id":"Ugxpp3JjWSwmQ_MTciF4AaABAQ","participants":[{"gaiaId":"117958354579682610269","name":"John Liu"},{"gaiaId":"116725099929439898086","name":"Kevin Lai"}],"list":"John Liu","user":"116725099929439898086"},{"type":"individual","id":"UgzuFmEZVO8eJhTlU4d4AaABAQ","participants":[{"gaiaId":"104978189561719149868","name":"Olivia Tse"},{"gaiaId":"116725099929439898086","name":"Kevin Lai"}],"list":"Olivia Tse","user":"116725099929439898086"},{"type":"individual","id":"UgySDy6W_I3uVllmbsJ4AaABAQ","participants":[{"gaiaId":"102623725716719325877"},{"gaiaId":"116725099929439898086","name":"Kevin Lai"}],"list":"undefined","user":"116725099929439898086"},{"type":"group","groupName":"Unknown Group","id":"UgxVfVottpWrHHmzs_Z4AaABAQ","participants":[{"gaiaId":"112184696875408886366","name":"Vincent Cheng"},{"gaiaId":"116725099929439898086","name":"Kevin Lai"}],"list":"Vincent Cheng","user":"116725099929439898086"},{"type":"group","groupName":"Unknown Group","id":"Ugy1jKEn94A4zkMjNoh4AaABAQ","participants":[{"gaiaId":"104978189561719149868","name":"Olivia Tse"},{"gaiaId":"112184696875408886366","name":"Vincent Cheng"},{"gaiaId":"116725099929439898086","name":"Kevin Lai"}],"list":"Olivia Tse, Vincent Cheng","user":"116725099929439898086"},{"type":"individual","id":"Ugy-nnOMYAl67wOEokt4AaABAQ","participants":[{"gaiaId":"116725099929439898086","name":"Kevin Lai"},{"gaiaId":"118105105088789656411","name":"Simon Bach Bjerring"}],"list":"Simon Bach Bjerring","user":"116725099929439898086"},{"type":"individual","id":"Ugxr_yS5wRBXGT6m5H54AaABAQ","participants":[{"gaiaId":"113622301731440878307","name":"Alex Leung"},{"gaiaId":"116725099929439898086","name":"Kevin Lai"}],"list":"Alex Leung","user":"116725099929439898086"},{"type":"individual","id":"UgwVGZghGsS9dK_lQWx4AaABAQ","participants":[{"gaiaId":"116725099929439898086","name":"Kevin Lai"},{"gaiaId":"116795214186745712134","name":"Dom Lai"}],"list":"Dom Lai","user":"116725099929439898086"},{"type":"individual","id":"UgwZPWpR2wDF1cSSGhx4AaABAQ","participants":[{"gaiaId":"110726642604307097493","name":"Carmen Chung"},{"gaiaId":"116725099929439898086","name":"+85260181854"}],"list":"Carmen Chung","user":"116725099929439898086"},{"type":"individual","id":"UgykCDbY4DYK-uGFYTd4AaABAQ","participants":[{"gaiaId":"102179455323735361768"},{"gaiaId":"116725099929439898086","name":"Kevin Lai"}],"list":"undefined","user":"116725099929439898086"},{"type":"group","groupName":"Unknown Group","id":"UgxfiKIfTh8GukIyBqx4AaABAQ","participants":[{"gaiaId":"108624733621885587961","name":"George Ching"},{"gaiaId":"103136271959304327572","name":"William Ka-Ho Sheng"},{"gaiaId":"110228156512460228231","name":"George Ching"},{"gaiaId":"116725099929439898086","name":"細佬 Pooper Hairy"},{"gaiaId":"112937314360475089734","name":"A. Chum"}],"list":"George Ching, William Ka-Ho Sheng, George Ching, A. Chum","user":"116725099929439898086"},{"type":"group","groupName":"Unknown Group","id":"UgxeZPcwEkVVGzqItYt4AaABAQ","participants":[{"gaiaId":"116725099929439898086"},{"gaiaId":"100754798773805885166","name":"Hei Lok Tso"}],"list":"Hei Lok Tso","user":"116725099929439898086"},{"type":"group","groupName":"Unknown Group","id":"UgwZrDxcyviA6ZdpfQZ4AaABAQ","participants":[{"gaiaId":"116725099929439898086","name":"Kevin Lai"},{"gaiaId":"115821829711457452449"}],"list":"undefined","user":"116725099929439898086"},{"type":"individual","id":"Ugw1Eq9Lfk64n_wcvtl4AaABAagB5NOEAQ","participants":[{"gaiaId":"116725099929439898086","name":"Kevin Lai"},{"gaiaId":"101455235059398068574"}],"list":"undefined","user":"116725099929439898086"},{"type":"individual","id":"UgydvFWht1Ixy0TAJ-N4AaABAQ","participants":[{"gaiaId":"116725099929439898086","name":"Kevin Lai"},{"gaiaId":"112937314360475089734","name":"A. Chum"}],"list":"A. Chum","user":"116725099929439898086"},{"type":"individual","id":"UgwmqW6N-Bmd-nEbJtV4AaABAagBpKS1Dw","participants":[{"gaiaId":"116725099929439898086","name":"Kevin Lai"},{"gaiaId":"113118167210198977068","name":"Tam Wing Yin"}],"list":"Tam Wing Yin","user":"116725099929439898086"},{"type":"individual","id":"UgyUhvEryQgWXix1bY94AaABAagB19-kBA","participants":[{"gaiaId":"112231489111530426653","name":"oil1155 12345"},{"gaiaId":"116725099929439898086","name":"Kevin Lai"}],"list":"oil1155 12345","user":"116725099929439898086"},{"type":"individual","id":"Ugy-JUDLJ68dI-DfsmV4AaABAagB15jzAw","participants":[{"gaiaId":"115940732859734226644","name":"Antariksh Singh"},{"gaiaId":"116725099929439898086","name":"Kevin Lai"}],"list":"Antariksh Singh","user":"116725099929439898086"},{"type":"group","groupName":"Unknown Group","id":"Ugw6RARXW4K94I3mM1d4AaABAQ","participants":[{"gaiaId":"111405853514832243702","name":"Andy Fung"},{"gaiaId":"113853484885517778350","name":"Sam Wong"},{"gaiaId":"116725099929439898086","name":"Kevin Lai"},{"gaiaId":"101559769448856496191","name":"Kin Yiu Wong"},{"gaiaId":"100754798773805885166"}],"list":"Andy Fung, Sam Wong, Kin Yiu Wong, undefined","user":"116725099929439898086"},{"type":"group","groupName":"Unknown Group","id":"UgzUBtneKlLKxC-bcYp4AaABAQ","participants":[{"gaiaId":"111405853514832243702"},{"gaiaId":"116725099929439898086"},{"gaiaId":"100754798773805885166"}],"list":"undefined, undefined","user":"116725099929439898086"},{"type":"group","groupName":"Unknown Group","id":"UgwAj5FDePRk0txsZr94AaABAQ","participants":[{"gaiaId":"111405853514832243702","name":"Andy Fung"},{"gaiaId":"116725099929439898086","name":"Kevin Lai"},{"gaiaId":"100754798773805885166"}],"list":"Andy Fung, undefined","user":"116725099929439898086"},{"type":"individual","id":"Ugw89RVSPzT-TIZnaKV4AaABAagByZaBCQ","participants":[{"gaiaId":"116725099929439898086","name":"Kevin Lai"},{"gaiaId":"111620797121640105952","name":"Long Wa Siu"}],"list":"Long Wa Siu","user":"116725099929439898086"},{"type":"group","groupName":"Unknown Group","id":"UgyWKsFuuI0H9_QS3GF4AaABAQ","participants":[{"gaiaId":"111405853514832243702","name":"Andy Fung"},{"gaiaId":"113853484885517778350"},{"gaiaId":"116725099929439898086"},{"gaiaId":"101559769448856496191"},{"gaiaId":"100754798773805885166"}],"list":"Andy Fung, undefined, undefined, undefined","user":"116725099929439898086"},{"type":"group","groupName":"Unknown Group","id":"Ugw1NAGok2WjmVnVy8B4AaABAQ","participants":[{"gaiaId":"116725099929439898086","name":"Kevin Lai"},{"gaiaId":"101559769448856496191"},{"gaiaId":"100754798773805885166"}],"list":"undefined, undefined","user":"116725099929439898086"},{"type":"group","groupName":"Unknown Group","id":"UgxKjgoSYvIhPg8q0CN4AaABAQ","participants":[{"gaiaId":"101451093722335283210"},{"gaiaId":"116725099929439898086","name":"Kevin Lai"},{"gaiaId":"101559769448856496191"},{"gaiaId":"100754798773805885166"}],"list":"undefined, undefined, undefined","user":"116725099929439898086"},{"type":"group","groupName":"Unknown Group","id":"UgwJR3ETNvzCGXO9Dz54AaABAQ","participants":[{"gaiaId":"103136271959304327572","name":"William Sheng"},{"gaiaId":"116725099929439898086","name":"Kevin Lai"},{"gaiaId":"116795214186745712134","name":"Dom Lai"},{"gaiaId":"112937314360475089734","name":"A. Chum"}],"list":"William Sheng, Dom Lai, A. Chum","user":"116725099929439898086"},{"type":"individual","id":"UgwYpWwl7kxBcmTNB0V4AaABAQ","participants":[{"gaiaId":"112184696875408886366","name":"Vincent Cheng"},{"gaiaId":"116725099929439898086","name":"Kevin Lai"}],"list":"Vincent Cheng","user":"116725099929439898086"},{"type":"individual","id":"UgwvtTXfWorSBPHUWQx4AaABAagByrq6CQ","participants":[{"gaiaId":"112489008061321442356","name":"樂仔"},{"gaiaId":"116725099929439898086","name":"Kevin Lai"}],"list":"樂仔","user":"116725099929439898086"},{"type":"individual","id":"UgxCK4-YG-kkG-f_irp4AaABAagBoai8Cg","participants":[{"gaiaId":"101451093722335283210","name":"Clifford Wu"},{"gaiaId":"116725099929439898086","name":"Kevin Lai"}],"list":"Clifford Wu","user":"116725099929439898086"},{"type":"individual","id":"UgzMY9GbrOlAgqzjxhV4AaABAagBsO7zCQ","participants":[{"gaiaId":"116725099929439898086","name":"Kevin Lai"},{"gaiaId":"101329230952243951550","name":"Yuko Pang"}],"list":"Yuko Pang","user":"116725099929439898086"},{"type":"individual","id":"UgznCwNT6Fw6dHTkVGF4AaABAagBzMmbAQ","participants":[{"gaiaId":"114362307495947784224"},{"gaiaId":"116725099929439898086","name":"Kevin Lai"}],"list":"undefined","user":"116725099929439898086"},{"type":"individual","id":"UgwelBvf1ephg2MWKPF4AaABAagBu7r-AQ","participants":[{"gaiaId":"105431234685212213863","name":"Waichun Cheung"},{"gaiaId":"116725099929439898086","name":"Kevin Lai"}],"list":"Waichun Cheung","user":"116725099929439898086"},{"type":"individual","id":"UgykPJEYozIOTJYkf7l4AaABAagB1t3UCw","participants":[{"gaiaId":"116125081999058945086","name":"陳廷晞"},{"gaiaId":"116725099929439898086","name":"Kevin Lai"}],"list":"陳廷晞","user":"116725099929439898086"},{"type":"individual","id":"Ugw9hq7XGC33O57vavd4AaABAagB_YK_CQ","participants":[{"gaiaId":"116725099929439898086","name":"Kevin Lai"},{"gaiaId":"101559769448856496191","name":"Kin Yiu Wong"}],"list":"Kin Yiu Wong","user":"116725099929439898086"},{"type":"individual","id":"UgxpQDNzZ5EvFxvWBTF4AaABAagB_u7oAg","participants":[{"gaiaId":"113853484885517778350","name":"Sam Wong"},{"gaiaId":"116725099929439898086","name":"Kevin Lai"}],"list":"Sam Wong","user":"116725099929439898086"},{"type":"individual","id":"Ugz7_e_kZ2HxvJvHmr14AaABAagBt5iuBQ","participants":[{"gaiaId":"114355308431236746221","name":"Foxan Ng"},{"gaiaId":"116725099929439898086","name":"Kevin Lai"}],"list":"Foxan Ng","user":"116725099929439898086"},{"type":"group","groupName":"Unknown Group","id":"UgwtNmsrzoKcqrEfX2J4AaABAQ","participants":[{"gaiaId":"116688983061000263557"},{"gaiaId":"113290746621410916946"},{"gaiaId":"116125081999058945086"},{"gaiaId":"101559769448856496191"},{"gaiaId":"100749764919725560317"},{"gaiaId":"101928543968529128211","name":"Kev Lai"},{"gaiaId":"105441465304023356479"},{"gaiaId":"113853484885517778350"},{"gaiaId":"116725099929439898086"},{"gaiaId":"100754798773805885166"}],"list":"undefined, undefined, undefined, undefined, undefined, Kev Lai, undefined, undefined, undefined","user":"116725099929439898086"},{"type":"group","groupName":"Unknown Group","id":"Ugw2Ejh9ZA9FCzy8TCx4AaABAQ","participants":[{"gaiaId":"116688983061000263557"},{"gaiaId":"101559769448856496191"},{"gaiaId":"113290746621410916946"},{"gaiaId":"101451093722335283210"},{"gaiaId":"100749764919725560317"},{"gaiaId":"101928543968529128211","name":"Kev Lai"},{"gaiaId":"105441465304023356479"},{"gaiaId":"113853484885517778350"},{"gaiaId":"116725099929439898086"},{"gaiaId":"100754798773805885166"}],"list":"undefined, undefined, undefined, undefined, undefined, Kev Lai, undefined, undefined, undefined","user":"116725099929439898086"},{"type":"individual","id":"UgwkSqsnyKKCAv-Pj8l4AaABAagB3NXHCA","participants":[{"gaiaId":"100749764919725560317","name":"Christopher Chiu"},{"gaiaId":"116725099929439898086","name":"Kevin Lai"}],"list":"Christopher Chiu","user":"116725099929439898086"},{"type":"individual","id":"UgxqG-5GAb4_i_vtbDV4AaABAQ","participants":[{"gaiaId":"103136271959304327572","name":"William Sheng"},{"gaiaId":"116725099929439898086","name":"Kevin Lai"}],"list":"William Sheng","user":"116725099929439898086"},{"type":"individual","id":"Ugwq59fb4EFxyFSMbzR4AaABAagB75TDDA","participants":[{"gaiaId":"101928543968529128211","name":"Kev Lai"},{"gaiaId":"116725099929439898086","name":"Kevin Lai"}],"list":"Kev Lai","user":"116725099929439898086"},{"type":"group","groupName":"Chiang Mai","id":"Ugyo6svTxmP3MQbxurV4AaABAQ","participants":[{"gaiaId":"105524006654987809707","name":"kevatuk@gmail.com"},{"gaiaId":"100749764919725560317","name":"Christopher Chiu"},{"gaiaId":"101928543968529128211","name":"Kev Lai"},{"gaiaId":"114355308431236746221","name":"Foxan Ng"},{"gaiaId":"114362307495947784224","name":"Christine bb"},{"gaiaId":"116725099929439898086","name":"Kevin Lai"}],"list":"kevatuk@gmail.com, Christopher Chiu, Kev Lai, Foxan Ng, Christine bb","user":"116725099929439898086"},{"type":"individual","id":"UgxyZ_AQMV4pwn9UvWV4AaABAQ","participants":[{"gaiaId":"116725099929439898086","name":"Kevin Lai"},{"gaiaId":"100754798773805885166","name":"Hei Lok Tso"}],"list":"Hei Lok Tso","user":"116725099929439898086"},{"type":"individual","id":"UgytEvoxP17iuUUXoud4AaABAagBpqyJAw","participants":[{"gaiaId":"105441465304023356479","name":"M Wong"},{"gaiaId":"116725099929439898086","name":"Kevin Lai"}],"list":"M Wong","user":"116725099929439898086"},{"type":"group","groupName":"HowBowDah","id":"UgyL6KCL052Tq6oQSu14AaABAQ","participants":[{"gaiaId":"116688983061000263557","name":"atang1029@gmail.com"},{"gaiaId":"113290746621410916946","name":"Anakin Yuen"},{"gaiaId":"105524006654987809707","name":"kevatuk@gmail.com"},{"gaiaId":"101451093722335283210","name":"Clifford Wu"},{"gaiaId":"100749764919725560317","name":"Christopher Chiu"},{"gaiaId":"101928543968529128211","name":"Kev Lai"},{"gaiaId":"114355308431236746221","name":"Foxan Ng"},{"gaiaId":"114362307495947784224","name":"Christine Fok"},{"gaiaId":"113853484885517778350","name":"Sam Wong"},{"gaiaId":"116725099929439898086","name":"Kevin Lai"},{"gaiaId":"101559769448856496191","name":"Kin Yiu Wong"}],"list":"atang1029@gmail.com, Anakin Yuen, kevatuk@gmail.com, Clifford Wu, Christopher Chiu, Kev Lai, Foxan Ng, Christine Fok, Sam Wong, Kin Yiu Wong","user":"116725099929439898086"},{"type":"group","groupName":"Gonna Get Schwifty","id":"Ugy_PUJ57Mp_33TfjQ94AaABAQ","participants":[{"gaiaId":"113290746621410916946","name":"Anakin Yuen"},{"gaiaId":"105524006654987809707","name":"kevatuk@gmail.com"},{"gaiaId":"100749764919725560317","name":"Christopher Chiu"},{"gaiaId":"101928543968529128211","name":"Kev Lai"},{"gaiaId":"105441465304023356479","name":"M Wong"},{"gaiaId":"113853484885517778350","name":"Sam Wong"},{"gaiaId":"116725099929439898086","name":"Kevin Lai"},{"gaiaId":"101559769448856496191","name":"Kin Yiu Wong"},{"gaiaId":"100754798773805885166","name":"Hei Lok Tso"}],"list":"Anakin Yuen, kevatuk@gmail.com, Christopher Chiu, Kev Lai, M Wong, Sam Wong, Kin Yiu Wong, Hei Lok Tso","user":"116725099929439898086"},{"type":"individual","id":"UgylVwHUsKjYT5sSElJ4AaABAQ","participants":[{"gaiaId":"115681458968227650592","name":"Indy Prentice"},{"gaiaId":"116725099929439898086","name":"Kevin Lai"}],"list":"Indy Prentice","user":"116725099929439898086"}],
       showProgressBar: true,
       participantList: [],
       numOfParticipants: 0,
@@ -162,29 +74,34 @@ export default {
   },
   computed: {
     ...mapState({
-      imageMap: state => state.Hangout.profileImgMap
+      imageMap: state => state.Hangout.profileImgMap,
+      conversationList: state => state.Hangout.conversationList,
     })
   },
-  created() {
-    this.initParticipantList()
+  watch: {
+    conversationList() {
+      this.initParticipantList()
+      // retrieve profile pics
+      let count = 0;
+      fetchProfileImgLinksStream(this.participantList, 'large')
+        .subscribe({
+          next: (result) => {
+            console.log(result)
+            this.imageMap[result.gaiaId] = result.result
+            this.$store.commit('Hangout/setProfileImgUrl', result)
+            count++;
+            this.progress = count / this.numOfParticipants
+            this.message = `Processed ${result.name} (${count} / ${this.numOfParticipants})`
+          },
+          complete: () => {
+            this.showProgressBar = false
+          }
+        })
+    }
   },
+  created() {},
   mounted() {
-    // retrieve profile pics
-    let count = 0;
-    fetchProfileImgLinksStream(this.participantList, 'large')
-      .subscribe({
-        next: (result) => {
-          console.log(result)
-          this.imageMap[result.gaiaId] = result.result
-          this.$store.commit('Hangout/setProfileImgUrl', result)
-          count++;
-          this.progress = count / this.numOfParticipants
-          this.message = `Processed ${result.name} (${count} / ${this.numOfParticipants})`
-        },
-        complete: () => {
-          this.showProgressBar = false
-        }
-      })
+
   },
   methods: {
     initParticipantList() {
@@ -206,7 +123,7 @@ export default {
 @import "~@material/image-list/dist/mdc.image-list.css";
 
 .mdc-image-list__image-aspect-container:hover, .mdc-image-list__item:hover {
-    opacity: 0.7;
+  opacity: 0.7;
 }
 
 .hero-image-list {
@@ -240,18 +157,23 @@ export default {
           column-count: 5;
   -webkit-column-gap: 16px;
           column-gap: 16px;
-  max-width: 900px; }
-  .masonry-image-list .mdc-image-list__item {
-    margin-bottom: 16px;
-    img.mdc-image-list__image {
-      width: 30%;
-      margin-left: 1px;
-    }
-    .mdc-image-list__label {
-      white-space: unset;
-      font-size: 0.9rem;
-    }
+  max-width: 900px;
+}
+
+.masonry-image-list .mdc-image-list__item {
+  margin-bottom: 16px;
+
+  img.mdc-image-list__image {
+    width: 32%;
+    margin-left: 1px;
   }
+
+  .mdc-image-list__label {
+    white-space: unset;
+    font-size: 0.9rem;
+  }
+
+}
 
 .mdc-image-list--masonry .mdc-image-list__image {
   display: inline-grid;
@@ -260,12 +182,17 @@ export default {
 @media (max-width: 599px) {
   .standard-image-list .mdc-image-list__item {
     width: calc(100% / 3 - 4.33333px);
-    margin: 2px; }
+    margin: 2px;
+  }
+
   .masonry-image-list {
     -webkit-column-count: 3;
             column-count: 3;
     -webkit-column-gap: 16px;
-            column-gap: 16px; }
-    .masonry-image-list .mdc-image-list__item {
-      margin-bottom: 16px; } }
+            column-gap: 16px;
+  }
+  .masonry-image-list .mdc-image-list__item {
+    margin-bottom: 16px;
+  }
+}
 </style>
