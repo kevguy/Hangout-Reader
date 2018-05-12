@@ -36,9 +36,12 @@ export default {
 
       const res = await handleJsonFile(worker)
       if (res) {
-        this.$store.commit('Hangout/initConversationList', res.data.conversationList);
-        // commit('saveConversations', res.data.conversations);
-        // commit('initialization');
+        const { conversationList,
+          conversationContents,
+          participantList } = res.data;
+        this.$store.commit('Hangout/initParticipantList', participantList)
+        this.$store.commit('Hangout/initConversationList', conversationList);
+        this.$store.commit('Hangout/initConversationContents', conversationContents);
       }
     }
   }

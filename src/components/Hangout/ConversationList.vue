@@ -6,13 +6,14 @@
       v-bind:element-id="'hangout-profile-img-progress'"
       v-bind:progress="progress"
     />
-
+    {{this.$store.state.Hangout.chosenConversationId}}
     <h2 class="mdc-typography--subtitle1">Personal:</h2>
     <ul class="mdc-image-list standard-image-list mdc-image-list--with-text-protection">
       <li
         class="mdc-image-list__item"
         v-for="(conversation, idx) in conversationList"
-        v-if="conversation.type === 'individual'">
+        v-if="conversation.type === 'individual'"
+        v-on:click="setConversation(conversation.id)">
         <div
           class="mdc-image-list__image-aspect-container"
           v-for="participant in conversation.participants"
@@ -53,7 +54,7 @@
 
 <script>
 import { fetchProfileImgLinksStream, fetchProfileImgLink } from '../../util/Hangout';
-import { mapState } from 'vuex';
+import { mapState, mapMutations } from 'vuex';
 import ProgressBar from '../UI/ProgressBar.vue';
 import { Observable } from 'rxjs/Rx';
 import { MDCLinearProgress } from '@material/linear-progress/dist/mdc.linearProgress'
@@ -104,6 +105,15 @@ export default {
 
   },
   methods: {
+    // ...mapMutations([
+    //   'increment', // map `this.increment()` to `this.$store.commit('increment')`
+    //
+    //   // `mapMutations` also supports payloads:
+    //   'incrementBy' // map `this.incrementBy(amount)` to `this.$store.commit('incrementBy', amount)`
+    // ]),
+    ...mapMutations({
+      setConversation: 'Hangout/updateChosenConversation' // map `this.add()` to `this.$store.commit('increment')`
+    }),
     initParticipantList() {
       this.conversationList.forEach((conversation) => {
         conversation.participants.forEach((participant) => {
