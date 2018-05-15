@@ -1,5 +1,3 @@
-import { Observable } from 'rxjs/Rx';
-
 export default {
   namespaced: true,
   state: {
@@ -13,7 +11,7 @@ export default {
     chosenConversationId: 0,
 
     participants: [],
-    history: [],
+    chosenConversationContent: [],
 
     pageOffset: 50,
     currentPageNo: 1,
@@ -32,14 +30,14 @@ export default {
     },
     updateChosenConversation(state, conversationId) {
       state.chosenConversationId = conversationId
-      state.history = state.conversationContents[conversationId]
+      state.chosenConversationContent = state.conversationContents[conversationId]
     },
     updateCurrentPageNo(state, num) { state.currentPageNo = num },
-    incrementCurrentPageNo(state) { state.currentPageNo++; },
+    incrementCurrentPageNo(state) { state.currentPageNo++ },
     decrementCurrentPageNo(state) { state.currentPageNo-- }
   },
   getters: {
-    numOfMsgs: state => state.history.length,
+    numOfMsgs: state => state.chosenConversationContent.length,
     numOfPages: (state, getters) => {
       const num = Math.floor(getters.numOfMsgs / state.pageOffset);
       if (((getters.numOfMsgs) % (state.pageOffset)) > 0) {
@@ -49,26 +47,7 @@ export default {
     },
     msgToShow: (state) => {
       const startIdx = (state.currentPageNo - 1) * state.pageOffset
-      return state.history.slice(startIdx, startIdx + state.pageOffset)
+      return state.chosenConversationContent.slice(startIdx, startIdx + state.pageOffset)
     }
   }
-  // getters: {
-  //   chosenConversation(state) { return state.chosenConversation; }
-  // }
-  // actions: {
-  //   handleJsonFile: async ({ commit }, file) => {
-  //     worker.postMessage({
-  //       action: 'HANDLE_JSON_FILE',
-  //       file,
-  //     })
-  //
-  //     const res = await handleJsonFile()
-  //     if (res) {
-  //       console.log(res.data.conversationList)
-  //       commit('initConversationList', res.data.conversationList);
-  //       // commit('saveConversations', res.data.conversations);
-  //       commit('initialization');
-  //     }
-  //   }
-  // }
 }
